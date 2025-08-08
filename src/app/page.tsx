@@ -86,7 +86,7 @@ export default function Home() {
       <main className="flex min-h-screen w-full flex-col items-center justify-center p-4 font-body sm:p-8">
         <div className="w-full max-w-3xl space-y-8">
           <div className="text-center text-4xl font-bold text-[#2d3748] dark:text-gray-200">
-            perplexity
+            How can I help you today ?
           </div>
 
           <div className="w-full">
