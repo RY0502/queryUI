@@ -13,19 +13,23 @@ import { ArrowRight, LoaderCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const AiIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="h-8 w-8 text-primary"
-  >
-    <path d="M15 6.5A3.5 3.5 0 0 0 8.5 3A3.5 3.5 0 0 0 5 6.5a3.5 3.5 0 0 0 3.5 3.5h7A3.5 3.5 0 0 0 19 6.5a3.5 3.5 0 0 0-3.5-3.5m-3.5 7A3.5 3.5 0 0 0 5 17.5a3.5 3.5 0 0 0 3.5 3.5A3.5 3.5 0 0 0 12 17.5V10m7 3.5A3.5 3.5 0 0 0 15.5 10a3.5 3.5 0 0 0-3.5 3.5A3.5 3.5 0 0 0 15.5 17h0" />
-  </svg>
-);
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="h-6 w-6 text-primary"
+    >
+      <path d="M9 12h6" />
+      <path d="M12 9v6" />
+      <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+      <path d="M8 12a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v0a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1Z" />
+      <path d="M12 8a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h0a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z" />
+    </svg>
+  );
 
 
 export default function Home() {
@@ -102,7 +106,7 @@ export default function Home() {
       <main className="flex min-h-screen w-full flex-col p-4 font-body sm:p-8">
         <header className="flex items-center space-x-2 self-start">
           <AiIcon />
-          <h1 className="text-2xl font-bold text-foreground">Definitive AI</h1>
+          <h1 className="text-xl font-semibold text-foreground/90">Definitive AI</h1>
         </header>
 
         <div className="flex-1 flex flex-col items-center justify-center">
@@ -149,7 +153,7 @@ export default function Home() {
                         />
                     </CardContent>
                     </Card>
-                )}
+                    )}
             </div>
         </div>
       </main>
