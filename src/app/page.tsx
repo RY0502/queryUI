@@ -53,7 +53,7 @@ export default function Home() {
         'https://6894bf8b00245593cabc.fra.appwrite.run/',
         {
  headers: {
- 'Content-Type': 'application/json',
+ 'Content-Type': 'text/plain',
  },
           method: 'POST',
           body: query,
