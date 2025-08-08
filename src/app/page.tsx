@@ -50,7 +50,7 @@ export default function Home() {
 
     try {
       const response = await fetch(
-        'https://6894bf8b00245593cabc.fra.appwrite.run/',
+        '/api/query',
         {
  headers: {
  'Content-Type': 'text/plain',
@@ -112,7 +112,7 @@ export default function Home() {
 
         <div className="flex-1 flex flex-col items-center justify-center">
             <div className="w-full max-w-3xl space-y-8">
-                <div className="text-center text-3xl sm:text-4xl font-bold text-[#2d3748] dark:text-gray-200">
+                <div className="text-center text-2xl sm:text-4xl font-bold text-[#2d3748] dark:text-gray-200">
                     How can I help you today ?
                 </div>
 
