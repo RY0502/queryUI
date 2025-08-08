@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
-import { ArrowRight, LoaderCircle, Search } from 'lucide-react';
+import { ArrowRight, LoaderCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 export default function Home() {
@@ -85,7 +85,7 @@ export default function Home() {
       )}
       <main className="flex min-h-screen w-full flex-col items-center justify-center p-4 font-body sm:p-8">
         <div className="w-full max-w-3xl space-y-8">
-          <div className="text-center text-4xl font-bold text-[#2d3748] dark:text-gray-200">
+          <div className="text-center text-3xl sm:text-4xl font-bold text-[#2d3748] dark:text-gray-200">
             How can I help you today ?
           </div>
 
@@ -94,7 +94,7 @@ export default function Home() {
               <Textarea
                 id="query"
                 placeholder="Ask anything..."
-                className="min-h-[56px] resize-none rounded-2xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 pr-28 text-base shadow-lg focus-visible:ring-2 focus-visible:ring-primary/50"
+                className="min-h-[56px] resize-none rounded-2xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 pr-16 sm:pr-28 text-base shadow-lg focus-visible:ring-2 focus-visible:ring-primary/50"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 disabled={isLoading}
@@ -115,14 +115,14 @@ export default function Home() {
 
           {responseHtml && !isLoading && (
             <Card className="overflow-hidden border-primary/10 shadow-xl rounded-2xl">
-              <CardHeader className="p-6">
-                <CardTitle className="font-headline text-primary">
+              <CardHeader className="p-4 sm:p-6">
+                <CardTitle className="font-headline text-primary text-xl sm:text-2xl">
                   Response
                 </CardTitle>
               </CardHeader>
-              <CardContent className="p-6 pt-0">
+              <CardContent className="p-4 sm:p-6 pt-0">
                 <div
-                  className="w-full font-code text-sm"
+                  className="w-full font-code text-sm prose dark:prose-invert max-w-none"
                   dangerouslySetInnerHTML={{ __html: responseHtml }}
                 />
               </CardContent>
