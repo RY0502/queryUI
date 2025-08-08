@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -23,11 +24,12 @@ const AiIcon = () => (
       strokeLinejoin="round"
       className="h-6 w-6 text-primary"
     >
-      <path d="M9 12h6" />
-      <path d="M12 9v6" />
-      <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-      <path d="M8 12a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v0a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1Z" />
-      <path d="M12 8a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h0a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z" />
+      <path d="M12 8V4H8" />
+      <rect width="16" height="12" x="4" y="8" rx="2" />
+      <path d="M2 14h2" />
+      <path d="M20 14h2" />
+      <path d="M15 13v2" />
+      <path d="M9 13v2" />
     </svg>
   );
 
@@ -106,7 +108,7 @@ export default function Home() {
       <main className="flex min-h-screen w-full flex-col p-4 font-body sm:p-8">
         <header className="flex items-center space-x-2 self-start">
           <AiIcon />
-          <h1 className="text-xl font-semibold text-foreground/90">Definitive AI</h1>
+          <h1 className="text-xl font-semibold text-foreground/80">Definitive AI</h1>
         </header>
 
         <div className="flex-1 flex flex-col items-center justify-center">
