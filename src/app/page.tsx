@@ -52,6 +52,9 @@ export default function Home() {
       const response = await fetch(
         'https://6894bf8b00245593cabc.fra.appwrite.run/',
         {
+ headers: {
+ 'Content-Type': 'text/plain',
+ },
           method: 'POST',
           body: query,
           signal: abortController.signal,
