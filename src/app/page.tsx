@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, PlusCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const AiIcon = () => (
@@ -35,12 +35,30 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [responseHtml, setResponseHtml] = useState('');
   const { toast } = useToast();
+  const queryInputRef = useRef<HTMLTextAreaElement>(null);
+
+
+  const handleFollowUp = () => {
+    if (queryInputRef.current) {
+      queryInputRef.current.focus();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    toast({
+      title: 'Current context is attached',
+    });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!query.trim()) return;
 
     setIsLoading(true);
+    
+    let finalQuery = query;
+    if (responseHtml) {
+        finalQuery = `${query}.Previous context in html format-${responseHtml}.You may need to extract the text from html format before using it for context.`
+    }
+    
     setResponseHtml('');
 
     const abortController = new AbortController();
@@ -52,11 +70,11 @@ export default function Home() {
       const response = await fetch(
         '/api/query',
         {
- headers: {
- 'Content-Type': 'text/plain',
- },
+         headers: {
+         'Content-Type': 'text/plain',
+         },
           method: 'POST',
-          body: query,
+          body: finalQuery,
           signal: abortController.signal,
         }
       );
@@ -110,6 +128,7 @@ export default function Home() {
                 <div className="w-full">
                     <form onSubmit={handleSubmit} className="relative">
                     <Textarea
+                        ref={queryInputRef}
                         id="query"
                         placeholder="Ask anything..."
                         className="min-h-[56px] resize-none rounded-2xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 pr-16 sm:pr-28 text-base shadow-lg focus-visible:ring-2 focus-visible:ring-primary/50"
@@ -152,6 +171,20 @@ export default function Home() {
                     </CardContent>
                     </Card>
                     )}
+                
+                {responseHtml && !isLoading && (
+                  <div className="flex items-center justify-center space-x-2 mt-4">
+                      <span className="text-muted-foreground">Ask follow up question ?</span>
+                      <Button
+                          variant="ghost"
+                          size="icon"
+                          className="rounded-full text-accent"
+                          onClick={handleFollowUp}
+                      >
+                          <PlusCircle className="h-6 w-6" />
+                      </Button>
+                  </div>
+                )}
             </div>
         </div>
       </main>
