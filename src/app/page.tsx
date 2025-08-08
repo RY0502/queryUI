@@ -19,21 +19,20 @@ const AiIcon = () => (
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="2"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="h-6 w-6 text-primary"
+      className="h-8 w-8 text-primary"
     >
-      <path d="M9.5 2.5a2.5 2.5 0 0 1 5 0" />
-      <path d="M12 6v1" />
-      <path d="M12 12v1" />
-      <path d="M12 18v1" />
-      <path d="M2.5 9.5a2.5 2.5 0 0 1 0-5" />
-      <path d="M6 12H5" />
-      <path d="M12 12H5" />
-      <path d="M18 12h-1" />
-      <path d="M21.5 9.5a2.5 2.5 0 0 0-5 0" />
-      <path d="M12 6a6 6 0 1 0 0 12" />
+      <path d="M12 2a10 10 0 1 0 10 10" />
+      <path d="M12 2a10 10 0 0 1 10 10" />
+      <path d="M12 2a10 10 0 0 0-10 10" />
+      <path d="M12 22a10 10 0 0 0 10-10" />
+      <path d="M12 22a10 10 0 0 1-10-10" />
+      <path d="M2 12a10 10 0 0 1 10-10" />
+      <path d="M22 12a10 10 0 0 0-10-10" />
+      <path d="M2 12a10 10 0 0 0 10 10" />
+      <path d="M22 12a10 10 0 0 1-10 10" />
     </svg>
   );
 
@@ -46,7 +45,7 @@ export default function Home() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!query.trim() || isLoading) return;
+    if (!query.trim()) return;
 
     setIsLoading(true);
     setResponseHtml('');
@@ -106,12 +105,12 @@ export default function Home() {
       <main className="flex min-h-screen w-full flex-col p-4 font-body sm:p-8">
         <header className="flex items-center space-x-2 self-start">
           <AiIcon />
-          <h1 className="text-base font-semibold text-foreground/80">Definitive AI</h1>
+          <h1 className="text-sm font-semibold text-foreground/80">Definitive AI</h1>
         </header>
 
         <div className="flex-1 flex flex-col items-center justify-center">
             <div className="w-full max-w-3xl space-y-4">
-                <div className="text-center text-2xl sm:text-4xl font-bold text-[#2d3748] dark:text-gray-200">
+                <div className="text-center text-2xl sm:text-3xl font-bold text-[#2d3748] dark:text-gray-200">
                     How can I help you today?
                 </div>
 
