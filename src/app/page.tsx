@@ -14,32 +14,22 @@ import { ArrowRight, LoaderCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const AiIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="h-8 w-8 text-primary"
-  >
-    <path d="M12 2a10 10 0 0 0-10 10c0 5 3.58 9.1 8.23 9.88" />
-    <path d="M12 22a10 10 0 0 0 10-10c0-5-3.58-9.1-8.23-9.88" />
-    <path d="M15 6a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
-    <path d="M18 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
-    <path d="M19 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
-    <path d="M16 18a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
-    <path d="M11 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
-    <path d="M7 19a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
-    <path d="M5 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
-    <path d="M6 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
-    <path d="M9.5 7a2.5 2.5 0 0 0-4.9 0" />
-    <path d="M15 13a2.5 2.5 0 0 0-4.9 0" />
-    <path d="M11.5 19a2.5 2.5 0 0 0-4.9 0" />
-    <path d="M17 11.5a2.5 2.5 0 0 0-4.9 0" />
-  </svg>
-);
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="h-8 w-8 text-primary"
+    >
+      <path d="M15 14c.2-1 .7-1.7 1.5-2.5C17.7 10.2 18 9 18 7.5c0-2.2-1.8-4-4-4-1.5 0-2.8.8-3.5 2" />
+      <path d="M9 18c-.2-1-.7-1.7-1.5-2.5C6.3 14.2 6 15 6 16.5c0 2.2 1.8 4 4 4 1.5 0 2.8-.8 3.5-2" />
+      <path d="M14.5 17.5c-1.5 0-2.8-.8-3.5-2" />
+      <path d="M9.5 6.5c1.5 0 2.8.8 3.5 2" />
+    </svg>
+  );
 
 
 export default function Home() {
