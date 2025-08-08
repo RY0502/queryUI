@@ -24,10 +24,12 @@ const AiIcon = () => (
       strokeLinejoin="round"
       className="h-8 w-8 text-primary"
     >
-      <path d="M15 14c.2-1 .7-1.7 1.5-2.5C17.7 10.2 18 9 18 7.5c0-2.2-1.8-4-4-4-1.5 0-2.8.8-3.5 2" />
-      <path d="M9 18c-.2-1-.7-1.7-1.5-2.5C6.3 14.2 6 15 6 16.5c0 2.2 1.8 4 4 4 1.5 0 2.8-.8 3.5-2" />
-      <path d="M14.5 17.5c-1.5 0-2.8-.8-3.5-2" />
-      <path d="M9.5 6.5c1.5 0 2.8.8 3.5 2" />
+      <path d="M12 8V4H8" />
+      <rect width="16" height="12" x="4" y="8" rx="2" />
+      <path d="M2 14h2" />
+      <path d="M20 14h2" />
+      <path d="M15 13v2" />
+      <path d="M9 13v2" />
     </svg>
   );
 
