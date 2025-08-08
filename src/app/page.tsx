@@ -68,7 +68,7 @@ export default function Home() {
 
     try {
       const response = await fetch(
-        '/api/query',
+        'https://6894bf8b00245593cabc.fra.appwrite.run/',
         {
          headers: {
          'Content-Type': 'text/plain',
