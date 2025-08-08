@@ -53,7 +53,7 @@ export default function Home() {
         'https://6894bf8b00245593cabc.fra.appwrite.run/',
         {
  headers: {
- 'Content-Type': 'text/plain',
+ 'Content-Type': 'text/json',
  },
           method: 'POST',
           body: query,
@@ -67,8 +67,8 @@ export default function Home() {
         throw new Error(`Network response was not ok: ${response.statusText}`);
       }
 
-      const html = await response.text();
-      setResponseHtml(html);
+      const html = await response.json();
+      setResponseHtml(html.json);
       setQuery('');
     } catch (error: any) {
       clearTimeout(timeoutId);
