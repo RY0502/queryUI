@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
-import { ArrowRight, LoaderCircle } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const AiIcon = () => (
@@ -22,10 +22,18 @@ const AiIcon = () => (
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="h-8 w-8 text-primary"
+      className="h-6 w-6 text-primary"
     >
-      <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Z" />
-      <path d="M12 18a6 6 0 1 0 0-12" />
+      <path d="M9.5 2.5a2.5 2.5 0 0 1 5 0" />
+      <path d="M12 6v1" />
+      <path d="M12 12v1" />
+      <path d="M12 18v1" />
+      <path d="M2.5 9.5a2.5 2.5 0 0 1 0-5" />
+      <path d="M6 12H5" />
+      <path d="M12 12H5" />
+      <path d="M18 12h-1" />
+      <path d="M21.5 9.5a2.5 2.5 0 0 0-5 0" />
+      <path d="M12 6a6 6 0 1 0 0 12" />
     </svg>
   );
 
@@ -95,25 +103,16 @@ export default function Home() {
 
   return (
     <>
-      {isLoading && (
-        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background/80 backdrop-blur-sm text-center p-4">
-          <LoaderCircle className="h-12 w-12 animate-spin text-primary" />
-          <p className="mt-4 text-lg font-semibold text-foreground">
-            Generating definitive results.
-          </p>
-          <p className="text-muted-foreground">It might take several minutes....</p>
-        </div>
-      )}
       <main className="flex min-h-screen w-full flex-col p-4 font-body sm:p-8">
         <header className="flex items-center space-x-2 self-start">
           <AiIcon />
-          <h1 className="text-lg font-semibold text-foreground/80">Definitive AI</h1>
+          <h1 className="text-base font-semibold text-foreground/80">Definitive AI</h1>
         </header>
 
         <div className="flex-1 flex flex-col items-center justify-center">
-            <div className="w-full max-w-3xl space-y-8">
+            <div className="w-full max-w-3xl space-y-4">
                 <div className="text-center text-2xl sm:text-4xl font-bold text-[#2d3748] dark:text-gray-200">
-                    How can I help you today ?
+                    How can I help you today?
                 </div>
 
                 <div className="w-full">
@@ -138,6 +137,12 @@ export default function Home() {
                     </div>
                     </form>
                 </div>
+
+                {isLoading && (
+                  <div className="text-center text-sm text-muted-foreground animate-pulse">
+                    Generating definitive results. This may take several minutes...
+                  </div>
+                )}
                 
 
                 {responseHtml && !isLoading && (
