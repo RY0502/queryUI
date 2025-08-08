@@ -50,7 +50,7 @@ export default function Home() {
 
     try {
       const response = await fetch(
-        'https://6894bf8b00245593cabc.fra.appwrite.run/',
+        '/api/summarize-llms',
         {
           method: 'POST',
           body: query,
