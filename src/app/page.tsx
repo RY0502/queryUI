@@ -19,13 +19,14 @@ const AiIcon = () => (
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.5"
+      strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
       className="h-8 w-8 text-primary"
     >
-      <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" />
-      <path d="M15.5 15.5C14.2834 16.3833 12.7214 16.9421 11 17C8.23858 17 6 14.7614 6 12C6 9.23858 8.23858 7 11 7C12.7214 7.05789 14.2834 7.61668 15.5 8.5" />
+      <path d="M12 2a10 10 0 1 0 10 10" />
+      <path d="M12 2L12 12" />
+      <path d="M12 12L17.52 7.47" />
     </svg>
   );
 
