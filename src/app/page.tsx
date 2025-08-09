@@ -116,7 +116,7 @@ export default function Home() {
       <main className="flex-grow flex flex-col p-4 sm:p-8 pb-10">
         <header className="flex items-center space-x-2 self-start">
           <AiIcon />
-          <h1 className="text-4xl md:text-5xl font-semibold text-foreground/80">Definitive AI</h1>
+          <h1 className="text-3xl md:text-2xl font-semibold text-foreground/80">Definitive AI</h1>
         </header>
 
         <div className="flex-1 flex flex-col items-center justify-center">
