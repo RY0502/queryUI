@@ -112,11 +112,11 @@ export default function Home() {
   const isButtonDisabled = !query.trim() || isLoading;
 
   return (
-    <>
-      <main className="flex min-h-screen w-full flex-col p-4 font-body sm:p-8 pb-10">
+    <div className="flex flex-col min-h-screen">
+      <main className="flex-grow flex flex-col p-4 sm:p-8 pb-10">
         <header className="flex items-center space-x-2 self-start">
           <AiIcon />
-          <h1 className="text-xl sm:text-2xl md:text-4xl font-semibold text-foreground/80">Definitive AI</h1>
+          <h1 className="text-2xl sm:text-2xl md:text-5xl font-semibold text-foreground/80">Definitive AI</h1>
         </header>
 
         <div className="flex-1 flex flex-col items-center justify-center">
@@ -188,9 +188,9 @@ export default function Home() {
             </div>
         </div>
       </main>
-      <footer className="w-full text-center text-xs text-muted-foreground opacity-50 pb-4">
+      <footer className="w-full text-center text-xs text-muted-foreground opacity-50 pb-6">
           &copy; RYaxn
       </footer>
-    </>
+    </div>
   );
 }
