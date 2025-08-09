@@ -113,8 +113,8 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <main className="flex-grow flex flex-col p-4 sm:p-8 pb-10">
-        <header className="flex items-center space-x-2 self-start">
+      <main className="flex-grow flex flex-col p-4 sm:p-6">
+        <header className="flex items-center space-x-2 self-start mb-4">
           <AiIcon />
           <h1 className="text-xl md:text-2xl font-semibold text-foreground/80">Definitive AI</h1>
         </header>
@@ -188,7 +188,7 @@ export default function Home() {
             </div>
         </div>
       </main>
-      <footer className="w-full text-center text-xs text-muted-foreground opacity-50 pb-6">
+      <footer className="w-full text-center text-xs text-muted-foreground opacity-50 py-4 px-4">
           &copy; RYaxn
       </footer>
     </div>
