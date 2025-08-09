@@ -116,12 +116,12 @@ export default function Home() {
       <main className="flex min-h-screen w-full flex-col p-4 font-body sm:p-8">
         <header className="flex items-center space-x-2 self-start">
           <AiIcon />
-          <h1 className="text-base md:text-xl font-semibold text-foreground/80">Definitive AI</h1>
+          <h1 className="text-base md:text-2xl font-semibold text-foreground/80">Definitive AI</h1>
         </header>
 
         <div className="flex-1 flex flex-col items-center justify-center">
             <div className="w-full max-w-3xl space-y-4">
-                <div className="text-center text-2xl sm:text-3xl font-bold text-[#2d3748] dark:text-gray-200">
+                <div className="text-center text-xl sm:text-3xl font-bold text-[#2d3748] dark:text-gray-200">
                     How can I help you today?
                 </div>
 
@@ -187,7 +187,7 @@ export default function Home() {
                 )}
             </div>
         </div>
-        <footer className="text-center text-xs text-muted-foreground opacity-50 pb-2">
+        <footer className="text-center text-xs text-muted-foreground opacity-50">
             &copy; RYaxn
         </footer>
       </main>
