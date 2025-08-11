@@ -115,7 +115,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-1 flex flex-col p-4">
-        <header className="flex items-center space-x-2 self-start mb-4">
+        <header className="flex items-center space-x-2 self-start mb-8">
           <AiIcon />
           <h1 className="text-xl md:text-lg font-semibold text-foreground/80">Definitive AI</h1>
         </header>
@@ -158,7 +158,7 @@ export default function Home() {
                 
 
                 {responseHtml && !isLoading && (
-                    <Card className="overflow-hidden border-primary/10 shadow-xl rounded-2xl">
+                    <Card className="overflow-hidden bg-white border-0 shadow-none rounded-2xl">
                     <CardContent className="p-4 sm:p-6">
                         <div
                         className="w-full font-code text-sm prose dark:prose-invert max-w-none"
