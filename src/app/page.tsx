@@ -121,7 +121,7 @@ export default function Home() {
             <AiIcon />
             <h1 className="text-xl md:text-lg font-semibold text-foreground/80">Definitive AI</h1>
           </div>
-          <div className="flex items-center justify-center bg-primary text-primary-foreground rounded-full h-10 w-10 text-sm font-bold">
+          <div className="flex items-center justify-center bg-accent text-accent-foreground rounded-full h-10 w-10 text-sm font-bold">
             F4A
           </div>
         </header>
