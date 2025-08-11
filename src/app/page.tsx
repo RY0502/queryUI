@@ -39,7 +39,7 @@ export default function Home() {
 
   const handleFollowUp = () => {
     if (queryInputRef.current) {
-      queryInput.current.focus();
+      queryInputRef.current.focus();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
     toast({
