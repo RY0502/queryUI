@@ -10,6 +10,7 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { ArrowRight, PlusCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
 
 const AiIcon = () => (
     <svg
@@ -114,14 +115,14 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <main className="flex-1 flex flex-col p-4">
-        <header className="flex items-center space-x-2 self-start mb-8">
+      <main className="flex-1 flex flex-col p-4 md:p-6">
+        <header className="flex items-center space-x-2 self-start mb-4">
           <AiIcon />
           <h1 className="text-xl md:text-lg font-semibold text-foreground/80">Definitive AI</h1>
         </header>
 
         <div className="flex-1 flex flex-col items-center justify-center">
-            <div className="w-full max-w-3xl space-y-4 mb-8">
+            <div className={cn("w-full max-w-3xl space-y-4", responseHtml ? "mt-8" : "mb-8")}>
                 <div className="text-center text-xl sm:text-2xl font-bold text-[#2d3748] dark:text-gray-200">
                     How can I help you today?
                 </div>
@@ -158,7 +159,7 @@ export default function Home() {
                 
 
                 {responseHtml && !isLoading && (
-                    <Card className="overflow-hidden bg-white border-0 shadow-none rounded-2xl">
+                    <Card className="overflow-hidden bg-[hsl(0_0%_99%)] dark:bg-[hsl(240_6%_11%)] border-0 shadow-none rounded-2xl">
                     <CardContent className="p-4 sm:p-6">
                         <div
                         className="w-full font-code text-sm prose dark:prose-invert max-w-none"
