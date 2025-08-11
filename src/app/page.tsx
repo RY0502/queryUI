@@ -39,7 +39,7 @@ export default function Home() {
 
   const handleFollowUp = () => {
     if (queryInputRef.current) {
-      queryInputRef.current.focus();
+      queryInput.current.focus();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
     toast({
@@ -190,7 +190,7 @@ export default function Home() {
             </div>
         </div>
       </main>
-      <footer className="w-full text-center text-xs text-muted-foreground opacity-50 py-4 px-4">
+      <footer className="w-full text-center text-xs text-muted-foreground opacity-50 py-2 px-4">
           &copy; RYaxn
       </footer>
     </div>
