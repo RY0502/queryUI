@@ -122,7 +122,7 @@ export default function Home() {
         </header>
 
         <div className="flex-1 flex flex-col items-center justify-center">
-            <div className={cn("w-full max-w-3xl space-y-4", responseHtml ? "mt-8" : "mb-8")}>
+            <div className={cn("w-full max-w-3xl space-y-4", responseHtml ? "mt-12" : "mb-8")}>
                 <div className="text-center text-xl sm:text-2xl font-bold text-[#2d3748] dark:text-gray-200">
                     How can I help you today?
                 </div>
