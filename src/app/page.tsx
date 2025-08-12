@@ -36,7 +36,7 @@ const AiIcon = () => (
   );
 
 const client = new Client()
-    .setEndpoint('https://fra.appwrite.io/v1')
+    .setEndpoint('https://fra.cloud.appwrite.io/v1')
     .setProject('688334d2001da7a18383');
 
 const account = new Account(client);
