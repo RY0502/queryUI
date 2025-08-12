@@ -124,7 +124,7 @@ export default function Home() {
         finalQuery = `${query}.Previous context in html format-${responseHtml}.You may need to extract the text from html format before using it for context.`
     }
     
-    setResponseHtml('');
+    setQuery('');
 
     const abortController = new AbortController();
     const timeoutId = setTimeout(() => {
@@ -152,7 +152,6 @@ export default function Home() {
 
       const html = await response.json();
       setResponseHtml(html.json);
-      setQuery('');
     } catch (error: any) {
       clearTimeout(timeoutId);
       if (error.name === 'AbortError') {
