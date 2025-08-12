@@ -17,7 +17,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { ArrowRight, PlusCircle, LogOut } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-import { Client, Account } from 'appwrite';
+import { Client, Account, OAuthProvider } from 'appwrite';
 
 const AiIcon = () => (
     <svg
@@ -36,8 +36,8 @@ const AiIcon = () => (
   );
 
 const client = new Client()
-    .setEndpoint('https://cloud.appwrite.io/v1')
-    .setProject('652926b18c594c361de7');
+    .setEndpoint('https://fra.appwrite.io/v1')
+    .setProject('688334d2001da7a18383');
 
 const account = new Account(client);
 
@@ -75,7 +75,7 @@ export default function Home() {
 
   const handleLogin = () => {
     account.createOAuth2Session(
-        'google', // provider
+        OAuthProvider.Google, // provider
         window.location.href, // success
         window.location.href // failure
     );
