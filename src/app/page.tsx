@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -11,6 +11,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { ArrowRight, PlusCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { Client, Account } from 'appwrite';
 
 const AiIcon = () => (
     <svg
@@ -28,14 +29,51 @@ const AiIcon = () => (
     </svg>
   );
 
+const client = new Client()
+    .setEndpoint('https://cloud.appwrite.io/v1')
+    .setProject('652926b18c594c361de7');
+
+const account = new Account(client);
+
+const getInitials = (name = '') => {
+  const [firstName, lastName] = name.split(' ');
+  if (firstName && lastName) {
+    return `${firstName.charAt(0)}${lastName.charAt(0)}`;
+  }
+  if (firstName) {
+    return firstName.substring(0, 2);
+  }
+  return 'F4A';
+};
 
 export default function Home() {
   const [query, setQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [responseHtml, setResponseHtml] = useState('');
+  const [user, setUser] = useState<{ name: string } | null>(null);
   const { toast } = useToast();
   const queryInputRef = useRef<HTMLTextAreaElement>(null);
 
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        const currentUser = await account.get();
+        setUser(currentUser);
+      } catch (error) {
+        // Not logged in
+        setUser(null);
+      }
+    };
+    checkSession();
+  }, []);
+
+  const handleLogin = () => {
+    account.createOAuth2Session(
+        'github', // provider
+        window.location.href, // success
+        window.location.href // failure
+    );
+  };
 
   const handleFollowUp = () => {
     if (queryInputRef.current) {
@@ -50,6 +88,11 @@ export default function Home() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!query.trim()) return;
+
+    if (!user) {
+        handleLogin();
+        return;
+    }
 
     setIsLoading(true);
     
@@ -68,12 +111,9 @@ export default function Home() {
     try {
       const response = await fetch(
         'https://6894bf8b00245593cabc.fra.appwrite.run/',
-        //'https://usdiugdjvlmeteiwsrwg.supabase.co/functions/v1/multi-ai-query',
         {
          headers: {
          'Content-Type': 'text/plain',
-         //'Content-Type': 'application/json',
-         //'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjNlNjE5YzJjIiwidHlwIjoiSldUIn0.eyJpc3MiOiJodHRwczovL2FsdC5zdXBhYmFzZS5pby9hdXRoL3YxIiwic3ViIjoiYjE4YWM5ZjktZGU3ZS00MmFjLWIyZDYtNmVmMDUyZTIxMTQxIiwiYXVkIjoiYXV0aGVudGljYXRlZCIsImV4cCI6MTc1NDg5NzgxOSwiaWF0IjoxNzU0ODk3MjE5LCJlbWFpbCI6InJhdmlfeWFkYXYwNTAyQHlhaG9vLmluIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJnaXRodWIiLCJwcm92aWRlcnMiOlsiZ2l0aHViIl19LCJ1c2VyX21ldGFkYXRhIjp7ImF2YXRhcl91cmwiOiJodHRwczovL2F2YXRhcnMuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3UvMTc5MzMzMzk_dj00IiwiZW1haWwiOiJyYXZpX3lhZGF2MDUwMkB5YWhvby5pbiIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczovL2FwaS5naXRodWIuY29tIiwicGhvbmVfdmVyaWZpZWQiOmZhbHNlLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJSWTA1MDIiLCJwcm92aWRlcl9pZCI6IjE3OTMzMzM5Iiwic3ViIjoiMTc5MzMzMzkiLCJ1c2VyX25hbWUiOiJSWTA1MDIifSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJvYXV0aCIsInRpbWVzdGFtcCI6MTc1NDg5NTY0M31dLCJzZXNzaW9uX2lkIjoiMDM1YzI4YWQtM2QyYS00YjQ3LWI0NTctZTI0OGIyOWQ1ODkyIiwiaXNfYW5vbnltb3VzIjpmYWxzZX0.SxwbjS9g-8i_-wcUzX8eVR3Kzn8NXLEU6IuKHV61nTPexVO-ZPk-vBR0u2pOVzyZyNLcWGtizVE34wrJy-Xs_OvEzqqeoMMBjYhxTpNL3MHNfGZJCSGG8jWYzd3Ri6leZoXFjC4Okumnjc-3rtyKIdQTna9dZj3CGa9WUj-D3Rf1VIV_o4Z7SV82Bh833PqAUllx3wfPw15IxH4VJOM2AIkfjsadAN_4mz_ZxuoRIrdhV1eg89UMuUeqbPxcpbayP4MkGTX3fY-59344c2pal8fWg2GZa9_KzvbN9e9wvWCyWpFU0EP92B0CUuy0UZ176X2uv_88N3i6PohNdw6P4A'
          },
           method: 'POST',
           body: finalQuery,
@@ -122,12 +162,12 @@ export default function Home() {
             <h1 className="text-xl md:text-lg font-semibold text-foreground/80">Definitive AI</h1>
           </div>
           <div className="flex items-center justify-center bg-accent text-accent-foreground rounded-full h-10 w-10 text-sm font-bold">
-            F4A
+            {user ? getInitials(user.name) : 'F4A'}
           </div>
         </header>
 
         <div className="flex-1 flex flex-col items-center justify-center">
-            <div className={cn("w-full max-w-3xl space-y-4", responseHtml ? "mt-12" : "mb-8")}>
+            <div className={cn("w-full max-w-3xl space-y-4", responseHtml ? "mt-12" : "")}>
                 <div className="text-center text-xl sm:text-2xl font-bold text-[#2d3748] dark:text-gray-200">
                     How can I help you today?
                 </div>
@@ -162,7 +202,6 @@ export default function Home() {
                   </div>
                 )}
                 
-
                 {responseHtml && !isLoading && (
                     <Card className="overflow-hidden bg-[hsl(0_0%_99%)] dark:bg-[hsl(240_6%_11%)] border-0 shadow-none rounded-2xl">
                     <CardContent className="p-4 sm:p-6">
