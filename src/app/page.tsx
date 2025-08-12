@@ -64,6 +64,7 @@ export default function Home() {
     const checkSession = async () => {
       try {
         const currentUser = await account.get();
+        console.log(currentUser);
         setUser(currentUser);
       } catch (error) {
         // Not logged in
