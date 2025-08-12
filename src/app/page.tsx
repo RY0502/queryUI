@@ -77,7 +77,8 @@ export default function Home() {
     account.createOAuth2Session(
         OAuthProvider.Google, // provider
         window.location.href, // success
-        window.location.href // failure
+        window.location.href, // failure
+        ['guests', 'user'] 
     );
   };
 
