@@ -7,8 +7,14 @@ import {
   Card,
   CardContent,
 } from '@/components/ui/card';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { Textarea } from '@/components/ui/textarea';
-import { ArrowRight, PlusCircle } from 'lucide-react';
+import { ArrowRight, PlusCircle, LogOut } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { Client, Account } from 'appwrite';
@@ -69,10 +75,27 @@ export default function Home() {
 
   const handleLogin = () => {
     account.createOAuth2Session(
-        'github', // provider
+        'google', // provider
         window.location.href, // success
         window.location.href // failure
     );
+  };
+
+  const handleLogout = async () => {
+    try {
+      await account.deleteSession('current');
+      setUser(null);
+      toast({
+        title: 'Logged Out',
+        description: 'You have been successfully logged out.',
+      });
+    } catch (error) {
+      toast({
+        title: 'Logout Failed',
+        description: 'Could not log you out. Please try again.',
+        variant: 'destructive',
+      });
+    }
   };
 
   const handleFollowUp = () => {
@@ -161,9 +184,25 @@ export default function Home() {
             <AiIcon />
             <h1 className="text-xl md:text-lg font-semibold text-foreground/80">Definitive AI</h1>
           </div>
-          <div className="flex items-center justify-center bg-accent text-accent-foreground rounded-full h-10 w-10 text-sm font-bold">
-            {user ? getInitials(user.name) : 'F4A'}
-          </div>
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <div className="flex items-center justify-center bg-accent text-accent-foreground rounded-full h-8 w-8 md:h-10 md:w-10 text-sm font-bold cursor-pointer">
+                  {getInitials(user.name)}
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Logout</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <div className="flex items-center justify-center bg-accent text-accent-foreground rounded-full h-8 w-8 md:h-10 md:w-10 text-sm font-bold">
+              F4A
+            </div>
+          )}
         </header>
 
         <div className="flex-1 flex flex-col items-center justify-center">
