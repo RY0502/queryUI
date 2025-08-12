@@ -42,6 +42,7 @@ const client = new Client()
 const account = new Account(client);
 
 const getInitials = (name = '') => {
+  if (!name) return 'F4A';
   const [firstName, lastName] = name.split(' ');
   if (firstName && lastName) {
     return `${firstName.charAt(0)}${lastName.charAt(0)}`;
@@ -64,10 +65,8 @@ export default function Home() {
     const checkSession = async () => {
       try {
         const currentUser = await account.get();
-        console.log(currentUser);
         setUser(currentUser);
       } catch (error) {
-        // Not logged in
         setUser(null);
       }
     };
@@ -200,7 +199,7 @@ export default function Home() {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <div className="flex items-center justify-center bg-accent text-accent-foreground rounded-full h-8 w-8 md:h-10 md:w-10 text-sm font-bold">
+            <div onClick={handleLogin} className="flex items-center justify-center bg-accent text-accent-foreground rounded-full h-8 w-8 md:h-10 md:w-10 text-sm font-bold cursor-pointer">
               F4A
             </div>
           )}
