@@ -233,7 +233,7 @@ export default function Home() {
                         placeholder="Ask anything..."
                         className="min-h-[56px] resize-none rounded-2xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 pr-16 sm:pr-28 text-base shadow-lg focus-visible:ring-2 focus-visible:ring-primary/50 font-body"
                         value={query}
-                        onChange={(e) => setQuery(e.targe.value)}
+                        onChange={(e) => setQuery(e.target.value)}
                         disabled={isLoading}
                     />
                     <div className="absolute bottom-3 right-3 flex items-center space-x-2">
