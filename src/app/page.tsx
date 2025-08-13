@@ -71,9 +71,9 @@ export default function Home() {
   const endpoints = [
       { name: 'Appwrite1', url: 'https://6894bf8b00245593cabc.fra.appwrite.run/', headers: { 'Content-Type': 'text/plain' }, bodyIsJson: false },
       { name: 'Appwrite2', url: 'https://689cc68f00299eeb37ee.fra.appwrite.run/', headers: { 'Content-Type': 'text/plain' }, bodyIsJson: false },
-      { name: 'Supabase', url: 'https://usdiugdjvlmeteiwsrwg.supabase.co/functions/v1/gemini-ai', headers: { 
+      { name: 'Supabase', url: 'https://usdiugdjvlmeteiwsrwg.supabase.co/functions/v1/gemini-ai', headers: {
           'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzZGl1Z2RqdmxtZXRlaXdzcndnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTMzMzg4MzQsImV4cCI6MjA2ODkxNDgzNH0.xUIStCZCHOrrS2iOIPCmA6OusJmmBs7nPc4kTxn2TQc',
-          'Content-Type': 'application/json' 
+          'Content-Type': 'application/json'
         }, bodyIsJson: true
       },
   ];
@@ -145,8 +145,8 @@ export default function Home() {
     setResponses([]);
     setCompletedRequests(0);
 
-    const promptWithSuffix = `${query}. Generate an html response that can be rendered directly on a webpage`;
-    
+    const promptWithSuffix = `${query}. It is mandatory to generate the response in html format without any quotation marks`;
+
     const getSuccessHtml = () => responses.find(r => !r.error)?.html || '';
 
     endpoints.forEach(async (endpoint) => {
@@ -165,7 +165,7 @@ export default function Home() {
                  finalQuery = `Query-${query}.Previous conversation context in html format-${cleanedResponseHtml}.You may need to extract the text from html format before using it for context.Always give first the answer of the query in question before adding anything related to previous conversation context.`
             }
         }
-        
+
         try {
             const response = await fetch(endpoint.url, {
                 method: 'POST',
@@ -181,7 +181,7 @@ export default function Home() {
             const html = result.json || result.html || 'Unable to generate results';
 
             setResponses(prev => [
-                ...prev, 
+                ...prev,
                 { source: `Source ${prev.length + 1}`, html, originalEndpoint: endpoint.url }
             ]);
 
@@ -203,7 +203,7 @@ export default function Home() {
     setQuery('');
     setIsFollowUp(false);
   };
-  
+
   useEffect(() => {
     if (completedRequests === endpoints.length && completedRequests > 0) {
       setIsLoading(false);
@@ -239,7 +239,7 @@ export default function Home() {
         </header>
 
         <div className={cn("flex-1 flex flex-col items-center", responses.length > 0 ? "justify-start" : "justify-center sm:justify-start md:justify-center")}>
-            <div className={cn("w-full max-w-3xl space-y-4", responses.length > 0 ? "mt-4 md:mt-12" : "mt-8 sm:mt-16 md:mt-0")}>
+            <div className={cn("w-full max-w-3xl space-y-4", responses.length > 0 ? "mt-4 md:mt-12" : "mt-8 sm:mt-12 md:mt-0")}>
                 <div className="text-center text-xl sm:text-2xl font-bold text-[#2d3748] dark:text-gray-200">
                     How can I help you today?
                 </div>
@@ -269,13 +269,13 @@ export default function Home() {
                 </div>
 
                 {isLoading && (
-                  <div className="text-center text-sm text-muted-foreground animate-pulse">
+                  <div className="text-center text-sm text-muted-foreground animate-pulse-fast">
                     Generating definitive results. This may take several minutes...
                   </div>
                 )}
-                
+
                 {responses.length > 0 && (
-                    <Tabs defaultValue={responses[0].source} className="w-full">
+                    <Tabs defaultValue={responses[0].source} className="w-full mt-6">
                         <TabsList className="grid w-full grid-cols-3">
                             {responses.map(res => (
                                 <TabsTrigger key={res.source} value={res.source}>{res.source}</TabsTrigger>
@@ -295,7 +295,7 @@ export default function Home() {
                         ))}
                     </Tabs>
                 )}
-                
+
                 {responses.length > 0 && !isLoading && (
                   <div className="flex items-center justify-center space-x-2 mt-4">
                       <span className="text-muted-foreground">Ask follow up question ?</span>
