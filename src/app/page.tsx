@@ -84,6 +84,12 @@ export default function Home() {
   const handleLogout = async () => {
     try {
       await account.deleteSession('current');
+      // Also clear any appwrite-related keys from localStorage
+      for (const key in localStorage) {
+        if (key.startsWith('appwrite-')) {
+          localStorage.removeItem(key);
+        }
+      }
       setUser(null);
       toast({
         title: 'Logged Out',
