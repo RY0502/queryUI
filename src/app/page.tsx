@@ -127,7 +127,7 @@ export default function Home() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
     toast({
-      title: 'Current context is attached',
+      title: 'Current contexts are attached',
       description: 'Ask your follow-up question now.',
     });
   };
@@ -145,7 +145,7 @@ export default function Home() {
     setResponses([]);
     setCompletedRequests(0);
 
-    const promptWithSuffix = `${query} - Generate an html response that can be rendered directly on a webpage`;
+    const promptWithSuffix = `${query}. Generate an html response that can be rendered directly on a webpage`;
     
     const getSuccessHtml = () => responses.find(r => !r.error)?.html || '';
 
@@ -162,7 +162,7 @@ export default function Home() {
 
             if(contextHtml){
                  const cleanedResponseHtml = contextHtml.replace(/<think>[\s\S]*?<\/think>/g, '');
-                 finalQuery = `Query-${query}.Previous context in html format-${cleanedResponseHtml}.You may need to extract the text from html format before using it for context.Always give first the answer of the query in question before any previous context.`
+                 finalQuery = `Query-${query}.Previous conversation context in html format-${cleanedResponseHtml}.You may need to extract the text from html format before using it for context.Always give first the answer of the query in question before adding anything related to previous conversation context.`
             }
         }
         
@@ -170,11 +170,11 @@ export default function Home() {
             const response = await fetch(endpoint.url, {
                 method: 'POST',
                 headers: endpoint.headers,
-                body: endpoint.bodyIsJson ? JSON.stringify({ query: finalQuery }) : finalQuery,
+                body: endpoint.bodyIsJson ? JSON.stringify({ prompt: finalQuery }) : finalQuery,
             });
 
             if (!response.ok) {
-              throw new Error('Increased system load. Please try after sometime');
+              throw new Error('System Error. Please try after sometime');
             }
 
             const result = await response.json();
