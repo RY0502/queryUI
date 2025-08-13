@@ -154,7 +154,7 @@ export default function Home() {
         if (isFollowUp) {
             const previousResponse = responses.find(r => r.originalEndpoint === endpoint.url);
             let contextHtml = '';
-            if (previousResponse && !previousResponse.error && previousResponse.html !== 'Unable to generate answer from this source. Results will be available in other source tabs shortly') {
+            if (previousResponse && !previousResponse.error && previousResponse.html !== 'Unable to generate answer from this source. Results will be available from other sources shortly') {
                 contextHtml = previousResponse.html;
             } else {
                 contextHtml = getSuccessHtml();
@@ -178,7 +178,7 @@ export default function Home() {
             }
 
             const result = await response.json();
-            const html = result.json || result.html || 'Unable to generate answer from this source. Results will be available in other source tabs shortly';
+            const html = result.json || result.html || 'Unable to generate answer from this source. Results will be available from other sources shortly';
 
             setResponses(prev => [
                 ...prev,
@@ -188,7 +188,7 @@ export default function Home() {
         } catch (error: any) {
             setResponses(prev => [
                 ...prev,
-                { source: `Source ${prev.length + 1}`, html: 'Unable to generate answer from this source. Results will be available in other source tabs shortly', originalEndpoint: endpoint.url, error: true }
+                { source: `Source ${prev.length + 1}`, html: 'Unable to generate answer from this source. Results will be available from other sources shortly', originalEndpoint: endpoint.url, error: true }
             ]);
              toast({
               title: `Error from ${endpoint.name}`,
