@@ -240,7 +240,7 @@ export default function Home() {
                     <Card className="overflow-hidden bg-[hsl(0_0%_99%)] dark:bg-[hsl(240_6%_11%)] border-0 shadow-none rounded-2xl">
                     <CardContent className="p-4 sm:p-6">
                         <div
-                        className="w-full font-code text-sm prose dark:prose-invert max-w-none"
+                        className="w-full font-body text-sm prose dark:prose-invert max-w-none"
                         dangerouslySetInnerHTML={{ __html: responseHtml }}
                         />
                     </CardContent>
