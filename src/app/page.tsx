@@ -184,7 +184,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-1 flex flex-col p-4 md:p-6">
-        <header className="flex items-center justify-between w-full mb-4">
+        <header className="flex items-center justify-between w-full mb-2 md:mb-4">
           <div className="flex items-center space-x-2">
             <AiIcon />
             <h1 className="text-xl md:text-lg font-semibold text-foreground/80">Definitive AI</h1>
@@ -207,7 +207,7 @@ export default function Home() {
         </header>
 
         <div className="flex-1 flex flex-col items-center justify-center">
-            <div className={cn("w-full max-w-3xl space-y-4", responseHtml ? "mt-12" : "")}>
+            <div className={cn("w-full max-w-3xl space-y-4", responseHtml ? "mt-4 md:mt-12" : "")}>
                 <div className="text-center text-xl sm:text-2xl font-bold text-[#2d3748] dark:text-gray-200">
                     How can I help you today?
                 </div>
