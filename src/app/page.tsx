@@ -215,8 +215,8 @@ export default function Home() {
           )}
         </header>
 
-        <div className={cn("flex-1 flex flex-col items-center", responseHtml ? "justify-start" : "justify-center")}>
-            <div className={cn("w-full max-w-3xl space-y-4", responseHtml ? "mt-4 md:mt-12" : "mb-16 sm:mb-0 md:mb-16")}>
+        <div className={cn("flex-1 flex flex-col items-center", responseHtml ? "justify-start" : "justify-center sm:justify-start md:justify-center")}>
+            <div className={cn("w-full max-w-3xl space-y-4", responseHtml ? "mt-4 md:mt-12" : "mt-8 sm:mt-16 md:mt-0")}>
                 <div className="text-center text-xl sm:text-2xl font-bold text-[#2d3748] dark:text-gray-200">
                     How can I help you today?
                 </div>
