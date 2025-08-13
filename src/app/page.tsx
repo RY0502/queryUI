@@ -131,6 +131,7 @@ export default function Home() {
         finalQuery = `${query}.Previous context in html format-${cleanedResponseHtml}.You may need to extract the text from html format before using it for context.`
     }
     
+    setResponseHtml('');
     setQuery('');
 
     const abortController = new AbortController();
@@ -159,6 +160,7 @@ export default function Home() {
 
       const html = await response.json();
       setResponseHtml(html.json);
+      setQuery('');
     } catch (error: any) {
       clearTimeout(timeoutId);
       if (error.name === 'AbortError') {
@@ -184,8 +186,8 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <main className="flex-1 flex flex-col p-4 md:p-6">
-        <header className="flex items-center justify-between w-full mb-2 md:mb-0">
+      <main className="flex-1 flex flex-col p-4">
+        <header className="flex items-center justify-between w-full mb-4 md:mb-6">
           <div className="flex items-center space-x-2">
             <AiIcon />
             <h1 className="text-xl md:text-lg font-semibold text-foreground/80">Definitive AI</h1>
@@ -207,8 +209,8 @@ export default function Home() {
           )}
         </header>
 
-        <div className="flex-1 flex flex-col items-center justify-center">
-            <div className={cn("w-full max-w-3xl space-y-4", responseHtml ? "mt-4 md:mt-12" : "")}>
+        <div className={cn("flex-1 flex flex-col items-center", responseHtml ? "justify-start" : "justify-center")}>
+            <div className={cn("w-full max-w-3xl space-y-4", responseHtml ? "mt-4 md:mt-12" : "mb-16 sm:mb-0")}>
                 <div className="text-center text-xl sm:text-2xl font-bold text-[#2d3748] dark:text-gray-200">
                     How can I help you today?
                 </div>
@@ -219,7 +221,7 @@ export default function Home() {
                         ref={queryInputRef}
                         id="query"
                         placeholder="Ask anything..."
-                        className="min-h-[56px] resize-none rounded-2xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 pr-16 sm:pr-28 text-base shadow-lg focus-visible:ring-2 focus-visible:ring-primary/50"
+                        className="min-h-[56px] resize-none rounded-2xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 pr-16 sm:pr-28 text-base shadow-lg focus-visible:ring-2 focus-visible:ring-primary/50 font-body"
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                         disabled={isLoading}
