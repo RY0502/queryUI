@@ -155,7 +155,13 @@ export default function Home() {
       clearTimeout(timeoutId);
 
       if (!response.ok) {
-        throw new Error(`Network response was not ok: ${response.statusText}`);
+        toast({
+          title: 'Error',
+          description: 'Increased system load. Please try after sometime',
+          variant: 'destructive',
+        });
+        setIsLoading(false);
+        return;
       }
 
       const html = await response.json();
@@ -187,7 +193,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-1 flex flex-col p-4">
-        <header className="flex items-center justify-between w-full mb-4 md:mb-6">
+        <header className="flex items-center justify-between w-full mb-4 md:mb-0">
           <div className="flex items-center space-x-2">
             <AiIcon />
             <h1 className="text-xl md:text-lg font-semibold text-foreground/80">Definitive AI</h1>
@@ -210,7 +216,7 @@ export default function Home() {
         </header>
 
         <div className={cn("flex-1 flex flex-col items-center", responseHtml ? "justify-start" : "justify-center")}>
-            <div className={cn("w-full max-w-3xl space-y-4", responseHtml ? "mt-4 md:mt-12" : "mb-16 sm:mb-0")}>
+            <div className={cn("w-full max-w-3xl space-y-4", responseHtml ? "mt-4 md:mt-12" : "mb-16 sm:mb-0 md:mb-16")}>
                 <div className="text-center text-xl sm:text-2xl font-bold text-[#2d3748] dark:text-gray-200">
                     How can I help you today?
                 </div>
