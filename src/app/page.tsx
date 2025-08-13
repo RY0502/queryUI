@@ -183,7 +183,7 @@ export default function Home() {
             <AiIcon />
             <h1 className="text-xl md:text-lg font-semibold text-foreground/80">Definitive AI</h1>
           </div>
-          {user ? (
+          {user && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <div className="flex items-center justify-center bg-accent text-accent-foreground rounded-full h-8 w-8 md:h-10 md:w-10 text-sm font-bold cursor-pointer">
@@ -197,10 +197,6 @@ export default function Home() {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-          ) : (
-            <div onClick={handleLogin} className="flex items-center justify-center bg-accent text-accent-foreground rounded-full h-8 w-8 md:h-10 md:w-10 text-sm font-bold cursor-pointer">
-              F4A
-            </div>
           )}
         </header>
 
