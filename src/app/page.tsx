@@ -86,7 +86,7 @@ export default function Home() {
       await account.deleteSession('current');
       // Also clear any appwrite-related keys from localStorage
       for (const key in localStorage) {
-        if (key.startsWith('appwrite-')) {
+        if (key.startsWith('cookieFallback')) {
           localStorage.removeItem(key);
         }
       }
