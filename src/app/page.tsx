@@ -131,7 +131,7 @@ export default function Home() {
     let finalQuery = query;
     if (isFollowUp && responseHtml) {
         const cleanedResponseHtml = responseHtml.replace(/<think>[\s\S]*?<\/think>/g, '');
-        finalQuery = `${query}.Previous context in html format-${cleanedResponseHtml}.You may need to extract the text from html format before using it for context.`
+        finalQuery = `Query-${query}.Previous context in html format-${cleanedResponseHtml}.You may need to extract the text from html format before using it for context.Always give first the answer of the query in question before any previous context.`
     }
     
     setResponseHtml('');
