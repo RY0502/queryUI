@@ -269,13 +269,13 @@ export default function Home() {
                 </div>
 
                 {isLoading && (
-                  <div className="text-center text-sm font-medium text-muted-foreground animate-pulse-fast">
+                  <div className="text-center text-sm font-medium text-foreground/90 animate-pulse-fast">
                     Generating comprehensive answer from several sources. This may take several seconds...
                   </div>
                 )}
 
                 {responses.length > 0 && (
-                    <Tabs defaultValue={responses[0].source} className="w-full mt-10">
+                    <Tabs defaultValue={responses[0].source} className="w-full mt-12">
                         <TabsList className="grid w-full grid-cols-3 bg-gray-100 dark:bg-gray-800/60 p-1 rounded-lg">
                             {responses.map(res => (
                                 <TabsTrigger 
