@@ -3,21 +3,26 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-} from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
 import { ArrowRight, PlusCircle, LogOut } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { Client, Account, OAuthProvider } from 'appwrite';
+
+type ApiResponse = {
+  source: string;
+  html: string;
+  originalEndpoint: string;
+  error?: boolean;
+};
 
 const AiIcon = () => (
     <svg
@@ -56,11 +61,18 @@ const getInitials = (name = '') => {
 export default function Home() {
   const [query, setQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [responseHtml, setResponseHtml] = useState('');
   const [user, setUser] = useState<{ name: string } | null>(null);
   const [isFollowUp, setIsFollowUp] = useState(false);
   const { toast } = useToast();
   const queryInputRef = useRef<HTMLTextAreaElement>(null);
+  const [responses, setResponses] = useState<ApiResponse[]>([]);
+  const [completedRequests, setCompletedRequests] = useState(0);
+
+  const endpoints = [
+      { name: 'Appwrite1', url: 'https://6894bf8b00245593cabc.fra.appwrite.run/' },
+      { name: 'Appwrite2', url: 'https://689cc68f000d43a9d619.fra.appwrite.run/' },
+      { name: 'Supabase', url: 'https://usdiugdjvlmeteiwsrwg.supabase.co/functions/v1/gemini-ai' },
+  ];
 
   useEffect(() => {
     const checkSession = async () => {
@@ -85,7 +97,6 @@ export default function Home() {
   const handleLogout = async () => {
     try {
       await account.deleteSession('current');
-      // Also clear any appwrite-related keys from localStorage
       for (const key in localStorage) {
         if (key.startsWith('cookieFallback')) {
           localStorage.removeItem(key);
@@ -127,70 +138,74 @@ export default function Home() {
     }
 
     setIsLoading(true);
-    
-    let finalQuery = query;
-    if (isFollowUp && responseHtml) {
-        const cleanedResponseHtml = responseHtml.replace(/<think>[\s\S]*?<\/think>/g, '');
-        finalQuery = `Query-${query}.Previous context in html format-${cleanedResponseHtml}.You may need to extract the text from html format before using it for context.Always give first the answer of the query in question before any previous context.`
-    }
-    
-    setResponseHtml('');
-    setQuery('');
-    setIsFollowUp(false); // Reset follow-up state
+    setResponses([]);
+    setCompletedRequests(0);
 
-    const abortController = new AbortController();
-    const timeoutId = setTimeout(() => {
-      abortController.abort();
-    }, 120000); // 2 minutes timeout
+    const promptWithSuffix = `${query} - Generate an html response that can be rendered directly on a webpage`;
+    
+    const getSuccessHtml = () => responses.find(r => !r.error)?.html || '';
 
-    try {
-      const response = await fetch(
-        'https://6894bf8b00245593cabc.fra.appwrite.run/',
-        {
-         headers: {
-         'Content-Type': 'text/plain',
-         },
-          method: 'POST',
-          body: finalQuery,
-          signal: abortController.signal,
+    endpoints.forEach(async (endpoint) => {
+        let finalQuery = promptWithSuffix;
+        if (isFollowUp) {
+            const previousResponse = responses.find(r => r.originalEndpoint === endpoint.url);
+            let contextHtml = '';
+            if (previousResponse && !previousResponse.error && previousResponse.html !== 'Unable to generate results') {
+                contextHtml = previousResponse.html;
+            } else {
+                contextHtml = getSuccessHtml();
+            }
+
+            if(contextHtml){
+                 const cleanedResponseHtml = contextHtml.replace(/<think>[\s\S]*?<\/think>/g, '');
+                 finalQuery = `Query-${query}.Previous context in html format-${cleanedResponseHtml}.You may need to extract the text from html format before using it for context.Always give first the answer of the query in question before any previous context.`
+            }
         }
-      );
-      
-      clearTimeout(timeoutId);
+        
+        try {
+            const response = await fetch(endpoint.url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain' },
+                body: finalQuery,
+            });
 
-      if (!response.ok) {
-        toast({
-          title: 'Error',
-          description: 'Increased system load. Please try after sometime',
-          variant: 'destructive',
-        });
-        setIsLoading(false);
-        return;
-      }
+            if (!response.ok) {
+              throw new Error('Increased system load. Please try after sometime');
+            }
 
-      const html = await response.json();
-      setResponseHtml(html.json);
-      setQuery('');
-    } catch (error: any) {
-      clearTimeout(timeoutId);
-      if (error.name === 'AbortError') {
-        toast({
-          title: 'Request Timed Out',
-          description:
-            'The request took too long to complete. Please try again.',
-          variant: 'destructive',
-        });
-      } else {
-        toast({
-          title: 'An Error Occurred',
-          description: error.message || 'Something went wrong. Please try again.',
-          variant: 'destructive',
-        });
-      }
-    } finally {
+            const result = await response.json();
+            const html = result.json || result.html || 'Unable to generate results';
+
+            setResponses(prev => [
+                ...prev, 
+                { source: `Source ${prev.length + 1}`, html, originalEndpoint: endpoint.url }
+            ]);
+
+        } catch (error: any) {
+            setResponses(prev => [
+                ...prev,
+                { source: `Source ${prev.length + 1}`, html: 'Unable to generate results', originalEndpoint: endpoint.url, error: true }
+            ]);
+             toast({
+              title: `Error from ${endpoint.name}`,
+              description: error.message || 'Failed to fetch response.',
+              variant: 'destructive',
+            });
+        } finally {
+            setCompletedRequests(prev => prev + 1);
+        }
+    });
+
+    setQuery('');
+    setIsFollowUp(false);
+  };
+  
+  useEffect(() => {
+    if (completedRequests === endpoints.length && completedRequests > 0) {
       setIsLoading(false);
     }
-  };
+  }, [completedRequests, endpoints.length]);
+
 
   const isButtonDisabled = !query.trim() || isLoading;
 
@@ -219,8 +234,8 @@ export default function Home() {
           )}
         </header>
 
-        <div className={cn("flex-1 flex flex-col items-center", responseHtml ? "justify-start" : "justify-center sm:justify-start md:justify-center")}>
-            <div className={cn("w-full max-w-3xl space-y-4", responseHtml ? "mt-4 md:mt-12" : "mt-8 sm:mt-16 md:mt-0")}>
+        <div className={cn("flex-1 flex flex-col items-center", responses.length > 0 ? "justify-start" : "justify-center sm:justify-start md:justify-center")}>
+            <div className={cn("w-full max-w-3xl space-y-4", responses.length > 0 ? "mt-4 md:mt-12" : "mt-8 sm:mt-16 md:mt-0")}>
                 <div className="text-center text-xl sm:text-2xl font-bold text-[#2d3748] dark:text-gray-200">
                     How can I help you today?
                 </div>
@@ -255,18 +270,29 @@ export default function Home() {
                   </div>
                 )}
                 
-                {responseHtml && !isLoading && (
-                    <Card className="overflow-hidden bg-[hsl(0_0%_99%)] dark:bg-[hsl(240_6%_11%)] border-0 shadow-none rounded-2xl">
-                    <CardContent className="p-4 sm:p-6">
-                        <div
-                        className="w-full font-body text-sm prose dark:prose-invert max-w-none"
-                        dangerouslySetInnerHTML={{ __html: responseHtml }}
-                        />
-                    </CardContent>
-                    </Card>
-                    )}
+                {responses.length > 0 && (
+                    <Tabs defaultValue={responses[0].source} className="w-full">
+                        <TabsList className="grid w-full grid-cols-3">
+                            {responses.map(res => (
+                                <TabsTrigger key={res.source} value={res.source}>{res.source}</TabsTrigger>
+                            ))}
+                        </TabsList>
+                        {responses.map(res => (
+                            <TabsContent key={res.source} value={res.source}>
+                                <Card className="overflow-hidden bg-[hsl(0_0%_99%)] dark:bg-[hsl(240_6%_11%)] border-0 shadow-none rounded-2xl">
+                                    <CardContent className="p-4 sm:p-6">
+                                        <div
+                                        className="w-full font-body text-sm prose dark:prose-invert max-w-none"
+                                        dangerouslySetInnerHTML={{ __html: res.html }}
+                                        />
+                                    </CardContent>
+                                </Card>
+                            </TabsContent>
+                        ))}
+                    </Tabs>
+                )}
                 
-                {responseHtml && !isLoading && (
+                {responses.length > 0 && !isLoading && (
                   <div className="flex items-center justify-center space-x-2 mt-4">
                       <span className="text-muted-foreground">Ask follow up question ?</span>
                       <Button
