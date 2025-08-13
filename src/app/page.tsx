@@ -74,10 +74,10 @@ export default function Home() {
   }, []);
 
   const handleLogin = () => {
-    account.createOAuth2Session(
-        OAuthProvider.Google, // provider
-        window.location.href, // success
-        window.location.href // failure
+    account.createOAuth2Token(
+      OAuthProvider.Google,
+      `${window.location.origin}/auth/callback`,
+      `${window.location.origin}/`
     );
   };
 
