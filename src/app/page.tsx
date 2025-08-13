@@ -127,7 +127,8 @@ export default function Home() {
     
     let finalQuery = query;
     if (responseHtml) {
-        finalQuery = `${query}.Previous context in html format-${responseHtml}.You may need to extract the text from html format before using it for context.`
+        const cleanedResponseHtml = responseHtml.replace(/<think>[\s\S]*?<\/think>/g, '');
+        finalQuery = `${query}.Previous context in html format-${cleanedResponseHtml}.You may need to extract the text from html format before using it for context.`
     }
     
     setQuery('');
@@ -184,7 +185,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-1 flex flex-col p-4 md:p-6">
-        <header className="flex items-center justify-between w-full mb-2 md:mb-4">
+        <header className="flex items-center justify-between w-full mb-2 md:mb-0">
           <div className="flex items-center space-x-2">
             <AiIcon />
             <h1 className="text-xl md:text-lg font-semibold text-foreground/80">Definitive AI</h1>
