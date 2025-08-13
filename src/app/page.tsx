@@ -276,14 +276,20 @@ export default function Home() {
 
                 {responses.length > 0 && (
                     <Tabs defaultValue={responses[0].source} className="w-full mt-6">
-                        <TabsList className="grid w-full grid-cols-3">
+                        <TabsList className="grid w-full grid-cols-3 bg-gray-100 dark:bg-gray-800/60 p-1 rounded-lg">
                             {responses.map(res => (
-                                <TabsTrigger key={res.source} value={res.source}>{res.source}</TabsTrigger>
+                                <TabsTrigger 
+                                    key={res.source} 
+                                    value={res.source}
+                                    className="data-[state=active]:bg-white data-[state=active]:text-gray-900 data-[state=active]:shadow-sm rounded-md dark:data-[state=active]:bg-gray-900 dark:data-[state=active]:text-gray-100"
+                                >
+                                    {res.source}
+                                </TabsTrigger>
                             ))}
                         </TabsList>
                         {responses.map(res => (
                             <TabsContent key={res.source} value={res.source}>
-                                <Card className="overflow-hidden bg-[hsl(0_0%_99%)] dark:bg-[hsl(240_6%_11%)] border-0 shadow-none rounded-2xl">
+                                <Card className="overflow-hidden bg-[hsl(0_0%_99%)] dark:bg-[hsl(240_6%_11%)] border-0 shadow-none rounded-2xl mt-2">
                                     <CardContent className="p-4 sm:p-6">
                                         <div
                                         className="w-full font-body text-sm prose dark:prose-invert max-w-none"
