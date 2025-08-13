@@ -269,7 +269,7 @@ export default function Home() {
                 </div>
 
                 {isLoading && (
-                  <div className="text-center text-sm text-muted-foreground animate-pulse-fast">
+                  <div className="text-center text-sm font-medium text-muted-foreground animate-pulse-fast">
                     Generating comprehensive results from several sources. This may take several seconds...
                   </div>
                 )}
