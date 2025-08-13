@@ -58,6 +58,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [responseHtml, setResponseHtml] = useState('');
   const [user, setUser] = useState<{ name: string } | null>(null);
+  const [isFollowUp, setIsFollowUp] = useState(false);
   const { toast } = useToast();
   const queryInputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -105,12 +106,14 @@ export default function Home() {
   };
 
   const handleFollowUp = () => {
+    setIsFollowUp(true);
     if (queryInputRef.current) {
       queryInputRef.current.focus();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
     toast({
       title: 'Current context is attached',
+      description: 'Ask your follow-up question now.',
     });
   };
 
@@ -126,13 +129,14 @@ export default function Home() {
     setIsLoading(true);
     
     let finalQuery = query;
-    if (responseHtml) {
+    if (isFollowUp && responseHtml) {
         const cleanedResponseHtml = responseHtml.replace(/<think>[\s\S]*?<\/think>/g, '');
         finalQuery = `${query}.Previous context in html format-${cleanedResponseHtml}.You may need to extract the text from html format before using it for context.`
     }
     
     setResponseHtml('');
     setQuery('');
+    setIsFollowUp(false); // Reset follow-up state
 
     const abortController = new AbortController();
     const timeoutId = setTimeout(() => {
@@ -229,7 +233,7 @@ export default function Home() {
                         placeholder="Ask anything..."
                         className="min-h-[56px] resize-none rounded-2xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 pr-16 sm:pr-28 text-base shadow-lg focus-visible:ring-2 focus-visible:ring-primary/50 font-body"
                         value={query}
-                        onChange={(e) => setQuery(e.target.value)}
+                        onChange={(e) => setQuery(e.targe.value)}
                         disabled={isLoading}
                     />
                     <div className="absolute bottom-3 right-3 flex items-center space-x-2">
