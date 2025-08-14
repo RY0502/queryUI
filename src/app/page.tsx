@@ -145,7 +145,7 @@ export default function Home() {
     setResponses([]);
     setCompletedRequests(0);
 
-    const promptWithSuffix = `${query}. It is mandatory to generate the response in html format in a clean format without any backtick or unnecessary extra characters`;
+    const promptWithSuffix = `${query}. It is mandatory to generate the response in simple and basic html format which can be rendered easily`;
 
     const getSuccessHtml = () => responses.find(r => !r.error)?.html || '';
 
@@ -162,7 +162,7 @@ export default function Home() {
 
             if(contextHtml){
                  const cleanedResponseHtml = contextHtml.replace(/<think>[\s\S]*?<\/think>/g, '');
-                 finalQuery = `Query-${query}.Previous conversation context in html format-${cleanedResponseHtml}.You may need to extract the text from html format before using it for context.In response give the answer of the query. Previous context is for background information.It is mandatory to generate the response in html format in a clean format without any backtick or unnecessary extra characters. `
+                 finalQuery = `Query-${query}.Previous conversation context in html format-${cleanedResponseHtml}.You may need to extract the text from html format before using it for context.In response give the answer of the query. Previous context is for background information.It is mandatory to generate the response in simple and basic html format which can be rendered easily. `
             }
         }
 
