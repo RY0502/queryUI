@@ -1,4 +1,4 @@
-# **App Name**: QueryCraft AI
+# **App Name**: Definitive AI
 
 ## Core Features:
 
