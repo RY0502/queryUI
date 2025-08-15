@@ -69,14 +69,15 @@ export default function Home() {
   const [completedRequests, setCompletedRequests] = useState(0);
 
   const endpoints = [
-      { name: 'Appwrite1', url: 'https://6894bf8b00245593cabc.fra.appwrite.run/', headers: { 'Content-Type': 'text/plain' }, bodyIsJson: false },
-      { name: 'Appwrite2', url: 'https://689cc68f00299eeb37ee.fra.appwrite.run/', headers: { 'Content-Type': 'text/plain' }, bodyIsJson: false },
-      { name: 'Supabase', url: 'https://usdiugdjvlmeteiwsrwg.supabase.co/functions/v1/gemini-ai', headers: {
-          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzZGl1Z2RqdmxtZXRlaXdzcndnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTMzMzg4MzQsImV4cCI6MjA2ODkxNDgzNH0.xUIStCZCHOrrS2iOIPCmA6OusJmmBs7nPc4kTxn2TQc',
-          'Content-Type': 'application/json'
-        }, bodyIsJson: true
-      },
-  ];
+    { name: 'Appwrite1', url: 'https://6894bf8b00245593cabc.fra.appwrite.run/', headers: { 'Content-Type': 'text/plain' }, bodyIsJson: false },
+    { name: 'Appwrite2', url: 'https://689cc68f00299eeb37ee.fra.appwrite.run/', headers: { 'Content-Type': 'text/plain' }, bodyIsJson: false },
+    { name: 'Appwrite3', url: 'https://689f1d6200262a0c8456.fra.appwrite.run/', headers: { 'Content-Type': 'text/plain' }, bodyIsJson: false },
+    // { name: 'Supabase', url: 'https://usdiugdjvlmeteiwsrwg.supabase.co/functions/v1/gemini-ai', headers: {
+    //     'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzZGl1Z2RqdmxtZXRlaXdzcndnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTMzMzg4MzQsImV4cCI6MjA2ODkxNDgzNH0.xUIStCZCHOrrS2iOIPCmA6OusJmmBs7nPc4kTxn2TQc',
+    //     'Content-Type': 'application/json'
+    //   }, bodyIsJson: true
+    // },
+    ];
 
   useEffect(() => {
     const checkSession = async () => {
