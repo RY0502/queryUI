@@ -163,7 +163,7 @@ export default function Home() {
 
             if(contextHtml){
                  const cleanedResponseHtml = contextHtml.replace(/<think>[\s\S]*?<\/think>/g, '');
-                 finalQuery = `Query-${query}.Previous conversation context in html format-${cleanedResponseHtml}.You may need to extract the text from html format before using it for context.In response give the answer of the query. Previous context is for background information.It is mandatory to generate the response in simple and basic html format which can be rendered easily. `
+                 finalQuery = `Query-${query}.Supporting context in html format-${cleanedResponseHtml}.You may need to extract the text from html format before using it for context.In response give the answer of the query. Supporting context is for background information only.It is mandatory to generate the response in simple and basic html format which can be rendered easily. `
             }
         }
 
