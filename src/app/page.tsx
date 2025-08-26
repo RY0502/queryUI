@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
-import { ArrowRight, PlusCircle, LogOut, Lightbulb } from 'lucide-react';
+import { ArrowRight, PlusCircle, LogOut, BrainCircuit } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { Client, Account, OAuthProvider } from 'appwrite';
@@ -198,7 +198,7 @@ export default function Home() {
       <main className="flex-1 flex flex-col p-4">
         <header className="flex items-center justify-between w-full mb-2 md:mb-0">
           <div className="flex items-center space-x-2">
-            <Lightbulb className="h-8 w-8 text-accent" />
+            <BrainCircuit className="h-8 w-8 text-accent" />
             <h1 className="text-xl md:text-lg font-semibold text-foreground/80">Definitive AI</h1>
           </div>
           {user && (
