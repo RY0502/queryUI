@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
-import { ArrowRight, PlusCircle, LogOut } from 'lucide-react';
+import { ArrowRight, PlusCircle, LogOut, BookOpen } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { Client, Account, OAuthProvider } from 'appwrite';
@@ -23,22 +23,6 @@ type ApiResponse = {
   originalEndpoint: string;
   error?: boolean;
 };
-
-const AiIcon = () => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="h-8 w-8 text-accent"
-    >
-      <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Z" />
-      <path d="M12 18a6 6 0 1 0 0-12" />
-    </svg>
-  );
 
 const client = new Client()
     .setEndpoint('https://fra.cloud.appwrite.io/v1')
@@ -214,7 +198,7 @@ export default function Home() {
       <main className="flex-1 flex flex-col p-4">
         <header className="flex items-center justify-between w-full mb-2 md:mb-0">
           <div className="flex items-center space-x-2">
-            <AiIcon />
+            <BookOpen className="h-8 w-8 text-accent" />
             <h1 className="text-xl md:text-lg font-semibold text-foreground/80">Definitive AI</h1>
           </div>
           {user && (
@@ -321,6 +305,8 @@ export default function Home() {
     </div>
   );
 }
+    
+
     
 
     
