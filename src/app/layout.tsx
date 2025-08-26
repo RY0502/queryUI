@@ -1,6 +1,7 @@
 import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
+import Script from 'next/script';
 
 export const metadata: Metadata = {
   title: 'Definitive AI',
@@ -23,6 +24,15 @@ export default function RootLayout({
       <body className="font-body antialiased">
         {children}
         <Toaster />
+        <Script id="flowise-chatbot" strategy="lazyOnload">
+          {`
+            import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js"
+            Chatbot.init({
+                chatflowid: "6a6a6d1d-acd4-44df-b5fd-74e2ce2ab9ec",
+                apiHost: "https://cloud.flowiseai.com",
+            })
+          `}
+        </Script>
       </body>
     </html>
   );
