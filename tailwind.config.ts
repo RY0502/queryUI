@@ -17,6 +17,7 @@ export default {
       colors: {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
+        logo: 'hsl(266, 60%, 75%)',
         card: {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
@@ -106,3 +107,5 @@ export default {
     require('@tailwindcss/typography')
   ],
 } satisfies Config;
+
+    

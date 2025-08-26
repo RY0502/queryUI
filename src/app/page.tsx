@@ -198,7 +198,7 @@ export default function Home() {
       <main className="flex-1 flex flex-col p-4">
         <header className="flex items-center justify-between w-full mb-2 md:mb-0">
           <div className="flex items-center space-x-2">
-            <Lightbulb className="h-8 w-8 text-accent" />
+            <Lightbulb className="h-8 w-8 text-logo" />
             <h1 className="text-xl md:text-lg font-semibold text-foreground/80">Definitive AI</h1>
           </div>
           {user && (
@@ -312,3 +312,6 @@ export default function Home() {
     
 
 
+
+
+    
