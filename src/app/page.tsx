@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
-import { ArrowRight, PlusCircle, LogOut, BrainCircuit } from 'lucide-react';
+import { ArrowRight, PlusCircle, LogOut } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { Client, Account, OAuthProvider } from 'appwrite';
@@ -41,6 +41,36 @@ const getInitials = (name = '') => {
   }
   return 'F4A';
 };
+
+const AiIcon = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <path d="M12 2a4.5 4.5 0 0 0-4.5 4.5c0 1.2.4 2.3 1.1 3.2.7 1 1.1 2.2 1.1 3.5V14a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-2.8c0-1.3.4-2.5 1.1-3.5.7-.9 1.1-2 1.1-3.2A4.5 4.5 0 0 0 12 2Z" />
+      <path d="M12 14.5v1.8c0 1.3.4 2.5 1.1 3.5.8.9 1.1 2.1 1.1 3.2" />
+      <path d="M12 14.5v1.8c0 1.3-.4 2.5-1.1 3.5-.8.9-1.1 2.1-1.1 3.2" />
+      <path d="M15 13a3 3 0 1 0-6 0" />
+      <path d="M12 14.5a3 3 0 0 0-3 3" />
+      <path d="M12 14.5a3 3 0 0 1 3 3" />
+      <path d="M17 18.5a3 3 0 0 0-3-3" />
+      <path d="M7 18.5a3 3 0 0 1 3-3" />
+      <circle cx="12" cy="12" r=".5" fill="currentColor" />
+      <circle cx="10" cy="10.5" r=".5" fill="currentColor" />
+      <circle cx="14" cy="10.5" r=".5" fill="currentColor" />
+       <circle cx="12" cy="8" r=".5" fill="currentColor" />
+      <circle cx="15" cy="16" r=".5" fill="currentColor" />
+      <circle cx="9" cy="16" r=".5" fill="currentColor" />
+    </svg>
+  );
 
 export default function Home() {
   const [query, setQuery] = useState('');
@@ -198,7 +228,7 @@ export default function Home() {
       <main className="flex-1 flex flex-col p-4">
         <header className="flex items-center justify-between w-full mb-2 md:mb-0">
           <div className="flex items-center space-x-2">
-            <BrainCircuit className="h-8 w-8 text-accent" />
+            <AiIcon className="h-8 w-8 text-accent" />
             <h1 className="text-xl md:text-lg font-semibold text-foreground/80">Definitive AI</h1>
           </div>
           {user && (
@@ -310,3 +340,4 @@ export default function Home() {
     
 
     
+
