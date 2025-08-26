@@ -26,11 +26,19 @@ export default function RootLayout({
         <Toaster />
         <Script id="flowise-chatbot" strategy="lazyOnload">
           {`
-            import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js"
-            Chatbot.init({
-                chatflowid: "6a6a6d1d-acd4-44df-b5fd-74e2ce2ab9ec",
-                apiHost: "https://cloud.flowiseai.com",
-            })
+            const script = document.createElement('script');
+            script.src = "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js";
+            script.type = "module";
+            script.async = true;
+            script.onload = () => {
+              if (window.Chatbot) {
+                window.Chatbot.init({
+                  chatflowid: "6a6a6d1d-acd4-44df-b5fd-74e2ce2ab9ec",
+                  apiHost: "https://cloud.flowiseai.com",
+                });
+              }
+            };
+            document.body.appendChild(script);
           `}
         </Script>
       </body>
