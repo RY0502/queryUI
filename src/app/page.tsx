@@ -262,7 +262,7 @@ export default function Home() {
                         </Button>
                     </div>
                     </form>
-                    <p className="text-xs italic font-light text-muted-foreground text-right mt-1 mr-2">*Use chat agent for realtime search</p>
+                    <p className="text-xs italic font-light text-muted-foreground text-right mt-1 mr-2">**Use chat agent for realtime search</p>
                 </div>
 
                 {isLoading && (
@@ -321,4 +321,6 @@ export default function Home() {
     </div>
   );
 }
+    
+
     
