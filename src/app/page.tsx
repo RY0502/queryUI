@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
@@ -12,7 +11,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
-import { ArrowRight, PlusCircle, LogOut, Lightbulb } from 'lucide-react';
+import { ArrowRight, PlusCircle, LogOut, Sparkles, Zap } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { Client, Account, OAuthProvider } from 'appwrite';
@@ -194,21 +193,33 @@ export default function Home() {
   const isButtonDisabled = !query.trim() || isLoading;
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <main className="flex-1 flex flex-col p-4">
-        <header className="flex items-center justify-between w-full mb-2 md:mb-0">
-          <div className="flex items-center space-x-2">
-            <Lightbulb className="h-8 w-8 md:h-8 md:w-8 text-logo" />
-            <h1 className="text-xl md:text-lg font-semibold text-foreground/80">Definitive AI</h1>
+    <div className="relative flex flex-col min-h-screen overflow-hidden">
+      {/* Aurora Background */}
+      <div className="aurora-bg" />
+      
+      {/* Gradient Overlay */}
+      <div className="fixed inset-0 bg-gradient-to-br from-indigo-50/50 via-cyan-50/30 to-violet-50/50 dark:from-indigo-950/20 dark:via-cyan-950/10 dark:to-violet-950/20 pointer-events-none" />
+
+      <main className="relative z-10 flex-1 flex flex-col p-4 md:p-6 pb-2">
+        {/* Header */}
+        <header className="flex items-center justify-between w-full mb-8 md:mb-12 fade-in">
+          <div className="flex items-center space-x-3 group">
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-cyan-500 rounded-full blur-lg opacity-50 group-hover:opacity-75 transition-opacity" />
+              <Sparkles className="relative h-8 w-8 md:h-10 md:w-10 text-indigo-600 dark:text-indigo-400" />
+            </div>
+            <h1 className="text-2xl md:text-3xl font-bold font-headline gradient-text">
+              Definitive AI
+            </h1>
           </div>
           {user && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <div className="flex items-center justify-center bg-accent text-accent-foreground rounded-full h-8 w-8 md:h-10 md:w-10 text-sm font-bold cursor-pointer">
-                  {getInitials(user.name)}
+                <div className="glass flex items-center justify-center rounded-full h-10 w-10 md:h-12 md:w-12 text-sm md:text-base font-bold cursor-pointer hover-glow smooth-transition shadow-lg">
+                  <span className="gradient-text">{getInitials(user.name)}</span>
                 </div>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
+              <DropdownMenuContent align="end" className="glass border-white/20">
                 <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
                   <LogOut className="mr-2 h-4 w-4" />
                   <span>Logout</span>
@@ -218,102 +229,136 @@ export default function Home() {
           )}
         </header>
 
-        <div className={cn("flex-1 flex flex-col items-center justify-center", responses.length > 0 && "justify-start")}>
-            <div className={cn("w-full max-w-3xl space-y-4", responses.length > 0 ? "mt-8 md:mt-12" : "mt-2 md:mt-2")}>
-                <div className="text-center text-xl sm:text-2xl font-bold text-[#2d3748] dark:text-gray-200">
-                    How can I help you today?
+        {/* Main Content */}
+        <div className={cn(
+          "flex-1 flex flex-col items-center",
+          responses.length > 0 ? "justify-start" : "justify-center md:justify-center"
+        )}>
+          <div className={cn(
+            "w-full max-w-4xl space-y-4 md:space-y-8",
+            responses.length > 0 ? "mt-4 md:mt-8" : ""
+          )}>
+            {/* Hero Title */}
+            {responses.length === 0 && (
+              <div className="text-center space-y-3 md:space-y-4 fade-in">
+                <h2 className="text-3xl md:text-6xl font-bold font-headline gradient-text leading-tight">
+                  How can I help you today?
+                </h2>
+                <p className="text-base md:text-xl text-muted-foreground font-body">
+                  Ask anything and get comprehensive answers from multiple sources
+                </p>
+              </div>
+            )}
+
+            {/* Query Input */}
+            <div className="w-full scale-in">
+              <form onSubmit={handleSubmit} className="relative">
+                <div className="glass-strong rounded-3xl p-1 shadow-2xl hover-glow smooth-transition">
+                  <Textarea
+                    ref={queryInputRef}
+                    id="query"
+                    placeholder="Ask anything..."
+                    className="min-h-[70px] md:min-h-[100px] resize-none rounded-3xl border-0 bg-transparent p-4 pr-16 md:p-6 md:pr-24 text-base md:text-lg font-body focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-muted-foreground/60"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    disabled={isLoading}
+                  />
                 </div>
-
-                <div className="w-full">
-                    <form onSubmit={handleSubmit} className="relative">
-                    <Textarea
-                        ref={queryInputRef}
-                        id="query"
-                        placeholder="Ask anything..."
-                        className="min-h-[56px] resize-none rounded-2xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 pr-16 sm:pr-28 text-base shadow-lg focus-visible:ring-2 focus-visible:ring-primary/50 font-body"
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                        disabled={isLoading}
-                    />
-                    <div className="absolute bottom-3 right-3 flex items-center space-x-2">
-                        <Button
-                            type="submit"
-                            disabled={isButtonDisabled}
-                            className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold p-2 rounded-full h-10 w-10 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
-                            aria-label="Submit query"
-                        >
-                            <ArrowRight className="h-5 w-5" />
-                        </Button>
-                    </div>
-                    </form>
-                    <p className="text-xs italic font-light text-muted-foreground text-right mt-1 mr-2">*Use chat agent for realtime search</p>
+                <div className="absolute bottom-3 right-3 md:bottom-5 md:right-5">
+                  <Button
+                    type="submit"
+                    disabled={isButtonDisabled}
+                    className="bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-700 hover:to-cyan-700 text-white font-bold p-0 rounded-full h-11 w-11 md:h-14 md:w-14 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-110 glow-primary"
+                    aria-label="Submit query"
+                  >
+                    <ArrowRight className="h-5 w-5 md:h-7 md:w-7" />
+                  </Button>
                 </div>
-
-                {isLoading && (
-                  <div className="text-center text-sm font-medium text-foreground/90 animate-pulse-fast">
-                    Generating comprehensive answer from several sources. This may take a few seconds...
-                  </div>
-                )}
-
-                {responses.length > 0 && (
-                    <Tabs defaultValue={responses[0].source} className="w-full mt-12">
-                        <TabsList className="grid w-full grid-cols-3 bg-gray-100 dark:bg-gray-800/60 p-1 rounded-lg">
-                            {responses.map(res => (
-                                <TabsTrigger 
-                                    key={res.source} 
-                                    value={res.source}
-                                    className="data-[state=active]:bg-white data-[state=active]:text-gray-900 data-[state=active]:shadow-sm rounded-md dark:data-[state=active]:bg-gray-900 dark:data-[state=active]:text-gray-100"
-                                >
-                                    {res.source}
-                                </TabsTrigger>
-                            ))}
-                        </TabsList>
-                        {responses.map(res => (
-                            <TabsContent key={res.source} value={res.source}>
-                                <Card className="overflow-hidden bg-[hsl(0_0%_99%)] dark:bg-[hsl(240_6%_11%)] border-0 shadow-none rounded-2xl mt-2">
-                                    <CardContent className="p-4 sm:p-6">
-                                        <div
-                                        className="w-full font-body text-sm prose dark:prose-invert max-w-none"
-                                        dangerouslySetInnerHTML={{ __html: res.html }}
-                                        />
-                                    </CardContent>
-                                </Card>
-                            </TabsContent>
-                        ))}
-                    </Tabs>
-                )}
-
-                {responses.length > 0 && !isLoading && (
-                  <div className="flex items-center justify-center space-x-2 mt-4">
-                      <span className="text-muted-foreground">Ask follow up question ?</span>
-                      <Button
-                          variant="ghost"
-                          size="icon"
-                          className="rounded-full text-accent"
-                          onClick={handleFollowUp}
-                      >
-                          <PlusCircle className="h-6 w-6" />
-                      </Button>
-                  </div>
-                )}
+              </form>
+              <p className="text-xs md:text-sm text-muted-foreground/70 text-right mt-2 mr-2 font-body italic">
+                *Use chat agent for realtime search
+              </p>
             </div>
+
+            {/* Loading State */}
+            {isLoading && (
+              <div className="flex flex-col items-center justify-center space-y-4 py-12 fade-in">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-cyan-500 rounded-full blur-xl opacity-50 animate-pulse" />
+                  <Zap className="relative h-12 w-12 md:h-16 md:w-16 text-indigo-600 dark:text-indigo-400 animate-pulse" />
+                </div>
+                <p className="text-base md:text-lg font-medium text-foreground/90 animate-pulse font-body">
+                  Generating comprehensive answer from multiple sources...
+                </p>
+                <p className="text-sm text-muted-foreground font-body">
+                  This may take a few seconds
+                </p>
+              </div>
+            )}
+
+            {/* Responses */}
+            {responses.length > 0 && (
+              <div className="fade-in">
+                <Tabs defaultValue={responses[0].source} className="w-full">
+                  <TabsList className="glass w-full flex justify-center gap-8 p-2 rounded-2xl shadow-lg mb-6 bg-transparent border-0">
+                    {responses.map((res, idx) => (
+                      <TabsTrigger 
+                        key={res.source} 
+                        value={res.source}
+                        className="relative bg-transparent border-0 font-semibold text-foreground/60 data-[state=active]:text-foreground smooth-transition px-4 py-2 data-[state=active]:shadow-none after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-gradient-to-r after:from-indigo-500 after:to-cyan-500 after:scale-x-0 data-[state=active]:after:scale-x-100 after:transition-transform after:duration-300"
+                      >
+                        <span className="hidden sm:inline">{res.source}</span>
+                        <span className="sm:hidden">S{idx + 1}</span>
+                      </TabsTrigger>
+                    ))}
+                  </TabsList>
+                  {responses.map(res => (
+                    <TabsContent key={res.source} value={res.source} className="mt-0">
+                      <Card className="glass-strong overflow-hidden border-0 shadow-2xl rounded-3xl smooth-transition hover:shadow-3xl">
+                        <CardContent className="p-6 md:p-8">
+                          <div
+                            className="w-full font-body text-sm md:text-base prose prose-indigo dark:prose-invert max-w-none prose-headings:font-headline prose-headings:gradient-text prose-a:text-indigo-600 dark:prose-a:text-indigo-400"
+                            dangerouslySetInnerHTML={{ __html: res.html }}
+                          />
+                        </CardContent>
+                      </Card>
+                    </TabsContent>
+                  ))}
+                </Tabs>
+              </div>
+            )}
+
+            {/* Follow-up Button */}
+            {responses.length > 0 && !isLoading && (
+              <div className="flex items-center justify-center space-x-3 mt-8 fade-in">
+                <span className="text-sm md:text-base text-muted-foreground font-body">
+                  Ask follow up question?
+                </span>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="glass rounded-full h-10 w-10 md:h-12 md:w-12 hover-glow smooth-transition shadow-lg"
+                  onClick={handleFollowUp}
+                >
+                  <PlusCircle className="h-5 w-5 md:h-6 md:w-6 text-indigo-600 dark:text-indigo-400" />
+                </Button>
+              </div>
+            )}
+          </div>
         </div>
       </main>
-      <footer className="w-full text-center text-xs text-muted-foreground opacity-50 py-2 px-4">
-          &copy; RYaxn
+
+      {/* Footer */}
+      <footer className="relative z-10 w-full text-center py-3 md:py-4 px-4 mt-auto">
+        <div className="glass rounded-2xl px-4 py-2 md:py-3 inline-block shadow-lg">
+          <p className="text-xs md:text-sm font-medium font-body">
+            <span className="text-muted-foreground/70">Crafted with</span>
+            <span className="mx-1.5 text-indigo-500 dark:text-indigo-400 animate-pulse">✨</span>
+            <span className="text-muted-foreground/70">by</span>
+            <span className="ml-1.5 gradient-text font-semibold">RYaxn</span>
+          </p>
+        </div>
       </footer>
     </div>
   );
 }
-    
-
-    
-
-    
-
-
-
-
-    
-
-    
