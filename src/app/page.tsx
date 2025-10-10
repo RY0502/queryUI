@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
-import { ArrowRight, PlusCircle, LogOut, Sparkles, Zap } from 'lucide-react';
+import { BrainCircuit, PlusCircle, LogOut, Lightbulb, Zap } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { Client, Account, OAuthProvider } from 'appwrite';
@@ -52,9 +52,9 @@ export default function Home() {
   const [completedRequests, setCompletedRequests] = useState(0);
 
   const endpoints = [
-    { name: 'Appwrite1', url: 'https://6894bf8b00245593cabc.fra.appwrite.run/', headers: { 'Content-Type': 'text/plain' }, bodyIsJson: false },
-    { name: 'Appwrite2', url: 'https://689cc68f00299eeb37ee.fra.appwrite.run/', headers: { 'Content-Type': 'text/plain' }, bodyIsJson: false },
-    { name: 'Appwrite3', url: 'https://689f1d6200262a0c8456.fra.appwrite.run/', headers: { 'Content-Type': 'text/plain' }, bodyIsJson: false },
+    { name: 'Gemini', url: 'https://6894bf8b00245593cabc.fra.appwrite.run/', headers: { 'Content-Type': 'text/plain' }, bodyIsJson: false },
+    { name: 'Perplexity', url: 'https://689cc68f00299eeb37ee.fra.appwrite.run/', headers: { 'Content-Type': 'text/plain' }, bodyIsJson: false },
+    { name: 'GPT', url: 'https://689f1d6200262a0c8456.fra.appwrite.run/', headers: { 'Content-Type': 'text/plain' }, bodyIsJson: false },
     ];
 
   useEffect(() => {
@@ -131,7 +131,7 @@ export default function Home() {
     endpoints.forEach(async (endpoint) => {
         let finalQuery = promptWithSuffix;
         if (isFollowUp) {
-            const previousResponse = responses.find(r => r.originalEndpoint === endpoint.url);
+            const previousResponse = responses.find(r => r.source === endpoint.name);
             let contextHtml = '';
             if (previousResponse && !previousResponse.error && previousResponse.html !== 'Unable to generate answer from this source. Results will be available from other sources shortly') {
                 contextHtml = previousResponse.html;
@@ -161,14 +161,14 @@ export default function Home() {
 
             setResponses(prev => [
                 ...prev,
-                { source: `Source ${prev.length + 1}`, html, originalEndpoint: endpoint.url }
-            ]);
+                { source: endpoint.name, html, originalEndpoint: endpoint.url }
+            ].sort((a, b) => endpoints.findIndex(e => e.name === a.source) - endpoints.findIndex(e => e.name === b.source)));
 
         } catch (error: any) {
             setResponses(prev => [
                 ...prev,
-                { source: `Source ${prev.length + 1}`, html: 'Unable to generate answer from this source. Results will be available from other sources shortly', originalEndpoint: endpoint.url, error: true }
-            ]);
+                { source: endpoint.name, html: 'Unable to generate answer from this source. Results will be available from other sources shortly', originalEndpoint: endpoint.url, error: true }
+            ].sort((a, b) => endpoints.findIndex(e => e.name === a.source) - endpoints.findIndex(e => e.name === b.source)));
              toast({
               title: `Error from ${endpoint.name}`,
               description: error.message || 'Failed to fetch response.',
@@ -206,7 +206,7 @@ export default function Home() {
           <div className="flex items-center space-x-3 group">
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-cyan-500 rounded-full blur-lg opacity-50 group-hover:opacity-75 transition-opacity" />
-              <Sparkles className="relative h-8 w-8 md:h-10 md:w-10 text-indigo-600 dark:text-indigo-400" />
+              <Lightbulb className="relative h-8 w-8 md:h-10 md:w-10 text-logo" />
             </div>
             <h1 className="text-2xl md:text-3xl font-bold font-headline gradient-text">
               Definitive AI
@@ -271,7 +271,7 @@ export default function Home() {
                     className="bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-700 hover:to-cyan-700 text-white font-bold p-0 rounded-full h-11 w-11 md:h-14 md:w-14 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-110 glow-primary"
                     aria-label="Submit query"
                   >
-                    <ArrowRight className="h-5 w-5 md:h-7 md:w-7" />
+                    <BrainCircuit className="h-5 w-5 md:h-7 md:w-7" />
                   </Button>
                 </div>
               </form>
@@ -301,20 +301,20 @@ export default function Home() {
               <div className="fade-in">
                 <Tabs defaultValue={responses[0].source} className="w-full">
                   <TabsList className="glass w-full flex justify-center gap-8 p-2 rounded-2xl shadow-lg mb-6 bg-transparent border-0">
-                    {responses.map((res, idx) => (
+                    {responses.map((res) => (
                       <TabsTrigger 
                         key={res.source} 
                         value={res.source}
                         className="relative bg-transparent border-0 font-semibold text-foreground/60 data-[state=active]:text-foreground smooth-transition px-4 py-2 data-[state=active]:shadow-none after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-gradient-to-r after:from-indigo-500 after:to-cyan-500 after:scale-x-0 data-[state=active]:after:scale-x-100 after:transition-transform after:duration-300"
                       >
                         <span className="hidden sm:inline">{res.source}</span>
-                        <span className="sm:hidden">S{idx + 1}</span>
+                        <span className="sm:hidden">{res.source}</span>
                       </TabsTrigger>
                     ))}
                   </TabsList>
                   {responses.map(res => (
                     <TabsContent key={res.source} value={res.source} className="mt-0">
-                      <Card className="glass-strong overflow-hidden border-0 shadow-2xl rounded-3xl smooth-transition hover:shadow-3xl">
+                      <Card className="glass-strong overflow-hidden border-0 shadow-2xl rounded-3xl smooth-transition hover:shadow-3xl bg-background">
                         <CardContent className="p-6 md:p-8">
                           <div
                             className="w-full font-body text-sm md:text-base prose prose-indigo dark:prose-invert max-w-none prose-headings:font-headline prose-headings:gradient-text prose-a:text-indigo-600 dark:prose-a:text-indigo-400"
