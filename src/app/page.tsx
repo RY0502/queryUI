@@ -52,9 +52,9 @@ export default function Home() {
   const [completedRequests, setCompletedRequests] = useState(0);
 
   const endpoints = [
-    { name: 'Gemini', url: 'https://6894bf8b00245593cabc.fra.appwrite.run/', headers: { 'Content-Type': 'text/plain' }, bodyIsJson: false },
-    { name: 'Perplexity', url: 'https://689cc68f00299eeb37ee.fra.appwrite.run/', headers: { 'Content-Type': 'text/plain' }, bodyIsJson: false },
-    { name: 'GPT', url: 'https://689f1d6200262a0c8456.fra.appwrite.run/', headers: { 'Content-Type': 'text/plain' }, bodyIsJson: false },
+    { name: 'Perplexity', url: 'https://6894bf8b00245593cabc.fra.appwrite.run/', headers: { 'Content-Type': 'text/plain' }, bodyIsJson: false },
+    { name: 'Llama/GPT', url: 'https://689cc68f00299eeb37ee.fra.appwrite.run/', headers: { 'Content-Type': 'text/plain' }, bodyIsJson: false },
+    { name: 'Gemini', url: 'https://689f1d6200262a0c8456.fra.appwrite.run/', headers: { 'Content-Type': 'text/plain' }, bodyIsJson: false },
     ];
 
   useEffect(() => {
