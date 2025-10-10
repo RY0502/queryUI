@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
-import { BrainCircuit, PlusCircle, LogOut, Lightbulb, Zap } from 'lucide-react';
+import { ArrowRight, PlusCircle, LogOut, Sparkles, Zap } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { Client, Account, OAuthProvider } from 'appwrite';
@@ -206,7 +206,7 @@ export default function Home() {
           <div className="flex items-center space-x-3 group">
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-cyan-500 rounded-full blur-lg opacity-50 group-hover:opacity-75 transition-opacity" />
-              <Lightbulb className="relative h-8 w-8 md:h-10 md:w-10 text-logo" />
+              <Sparkles className="relative h-8 w-8 md:h-10 md:w-10 text-indigo-600 dark:text-indigo-400" />
             </div>
             <h1 className="text-2xl md:text-3xl font-bold font-headline gradient-text">
               Definitive AI
@@ -271,7 +271,7 @@ export default function Home() {
                     className="bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-700 hover:to-cyan-700 text-white font-bold p-0 rounded-full h-11 w-11 md:h-14 md:w-14 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-110 glow-primary"
                     aria-label="Submit query"
                   >
-                    <BrainCircuit className="h-5 w-5 md:h-7 md:w-7" />
+                    <ArrowRight className="h-5 w-5 md:h-7 md:w-7" />
                   </Button>
                 </div>
               </form>
@@ -314,7 +314,7 @@ export default function Home() {
                   </TabsList>
                   {responses.map(res => (
                     <TabsContent key={res.source} value={res.source} className="mt-0">
-                      <Card className="glass-strong overflow-hidden border-0 shadow-2xl rounded-3xl smooth-transition hover:shadow-3xl bg-background">
+                      <Card className="glass-strong overflow-hidden border-0 shadow-2xl rounded-3xl smooth-transition hover:shadow-3xl">
                         <CardContent className="p-6 md:p-8">
                           <div
                             className="w-full font-body text-sm md:text-base prose prose-indigo dark:prose-invert max-w-none prose-headings:font-headline prose-headings:gradient-text prose-a:text-indigo-600 dark:prose-a:text-indigo-400"
