@@ -24,8 +24,8 @@ type ApiResponse = {
 };
 
 const client = new Client()
-    .setEndpoint('https://fra.cloud.appwrite.io/v1')
-    .setProject('688334d2001da7a18383');
+  .setEndpoint('https://fra.cloud.appwrite.io/v1')
+  .setProject('688334d2001da7a18383');
 
 const account = new Account(client);
 
@@ -55,7 +55,7 @@ export default function Home() {
     { name: 'Perplexity', url: 'https://6894bf8b00245593cabc.fra.appwrite.run/', headers: { 'Content-Type': 'text/plain' }, bodyIsJson: false },
     { name: 'OpenSource', url: 'https://689cc68f00299eeb37ee.fra.appwrite.run/', headers: { 'Content-Type': 'text/plain' }, bodyIsJson: false },
     { name: 'Gemini', url: 'https://689f1d6200262a0c8456.fra.appwrite.run/', headers: { 'Content-Type': 'text/plain' }, bodyIsJson: false },
-    ];
+  ];
 
   useEffect(() => {
     const checkSession = async () => {
@@ -116,8 +116,8 @@ export default function Home() {
     if (!query.trim()) return;
 
     if (!user) {
-        handleLogin();
-        return;
+      handleLogin();
+      return;
     }
 
     setIsLoading(true);
@@ -129,54 +129,54 @@ export default function Home() {
     const getSuccessHtml = () => responses.find(r => !r.error)?.html || '';
 
     endpoints.forEach(async (endpoint) => {
-        let finalQuery = promptWithSuffix;
-        if (isFollowUp) {
-            const previousResponse = responses.find(r => r.source === endpoint.name);
-            let contextHtml = '';
-            if (previousResponse && !previousResponse.error && previousResponse.html !== 'Unable to generate answer from this source. Results will be available from other sources shortly') {
-                contextHtml = previousResponse.html;
-            } else {
-                contextHtml = getSuccessHtml();
-            }
-
-            if(contextHtml){
-                 const cleanedResponseHtml = contextHtml.replace(/<think>[\s\S]*?<\/think>/g, '');
-                 finalQuery = `Query-${query}.Supporting context in html format-${cleanedResponseHtml}.You may need to extract the text from html format before using it for context.In response give the answer of the query. Supporting context is for background information only.It is mandatory to generate the response in simple and basic html format which can be rendered easily. `
-            }
+      let finalQuery = promptWithSuffix;
+      if (isFollowUp) {
+        const previousResponse = responses.find(r => r.source === endpoint.name);
+        let contextHtml = '';
+        if (previousResponse && !previousResponse.error && previousResponse.html !== 'Unable to generate answer from this source. Results will be available from other sources shortly') {
+          contextHtml = previousResponse.html;
+        } else {
+          contextHtml = getSuccessHtml();
         }
 
-        try {
-            const response = await fetch(endpoint.url, {
-                method: 'POST',
-                headers: endpoint.headers,
-                body: endpoint.bodyIsJson ? JSON.stringify({ prompt: finalQuery }) : finalQuery,
-            });
-
-            if (!response.ok) {
-              throw new Error('System Error. Please try after sometime');
-            }
-
-            const result = await response.json();
-            const html = result.json || result.html || 'Unable to generate answer from this source. Results will be available from other sources shortly';
-
-            setResponses(prev => [
-                ...prev,
-                { source: endpoint.name, html, originalEndpoint: endpoint.url }
-            ].sort((a, b) => endpoints.findIndex(e => e.name === a.source) - endpoints.findIndex(e => e.name === b.source)));
-
-        } catch (error: any) {
-            setResponses(prev => [
-                ...prev,
-                { source: endpoint.name, html: 'Unable to generate answer from this source. Results will be available from other sources shortly', originalEndpoint: endpoint.url, error: true }
-            ].sort((a, b) => endpoints.findIndex(e => e.name === a.source) - endpoints.findIndex(e => e.name === b.source)));
-             toast({
-              title: `Error from ${endpoint.name}`,
-              description: error.message || 'Failed to fetch response.',
-              variant: 'destructive',
-            });
-        } finally {
-            setCompletedRequests(prev => prev + 1);
+        if (contextHtml) {
+          const cleanedResponseHtml = contextHtml.replace(/<think>[\s\S]*?<\/think>/g, '');
+          finalQuery = `Query-${query}.Supporting context in html format-${cleanedResponseHtml}.You may need to extract the text from html format before using it for context.In response give the answer of the query. Supporting context is for identifying background of asked question only. It does not contains the answer. Use your knowledge or search to fetch the answer. It is mandatory to generate the response in simple and basic html format which can be rendered easily. `
         }
+      }
+
+      try {
+        const response = await fetch(endpoint.url, {
+          method: 'POST',
+          headers: endpoint.headers,
+          body: endpoint.bodyIsJson ? JSON.stringify({ prompt: finalQuery }) : finalQuery,
+        });
+
+        if (!response.ok) {
+          throw new Error('System Error. Please try after sometime');
+        }
+
+        const result = await response.json();
+        const html = result.json || result.html || 'Unable to generate answer from this source. Results will be available from other sources shortly';
+
+        setResponses(prev => [
+          ...prev,
+          { source: endpoint.name, html, originalEndpoint: endpoint.url }
+        ].sort((a, b) => endpoints.findIndex(e => e.name === a.source) - endpoints.findIndex(e => e.name === b.source)));
+
+      } catch (error: any) {
+        setResponses(prev => [
+          ...prev,
+          { source: endpoint.name, html: 'Unable to generate answer from this source. Results will be available from other sources shortly', originalEndpoint: endpoint.url, error: true }
+        ].sort((a, b) => endpoints.findIndex(e => e.name === a.source) - endpoints.findIndex(e => e.name === b.source)));
+        toast({
+          title: `Error from ${endpoint.name}`,
+          description: error.message || 'Failed to fetch response.',
+          variant: 'destructive',
+        });
+      } finally {
+        setCompletedRequests(prev => prev + 1);
+      }
     });
 
     setQuery('');
@@ -196,7 +196,7 @@ export default function Home() {
     <div className="relative flex flex-col min-h-screen overflow-hidden">
       {/* Aurora Background */}
       <div className="aurora-bg" />
-      
+
       {/* Gradient Overlay */}
       <div className="fixed inset-0 bg-gradient-to-br from-indigo-50/50 via-cyan-50/30 to-violet-50/50 dark:from-indigo-950/20 dark:via-cyan-950/10 dark:to-violet-950/20 pointer-events-none" />
 
@@ -302,8 +302,8 @@ export default function Home() {
                 <Tabs defaultValue={responses[0].source} className="w-full">
                   <TabsList className="glass w-full flex justify-center gap-8 p-2 rounded-2xl shadow-lg mb-6 bg-transparent border-0">
                     {responses.map((res) => (
-                      <TabsTrigger 
-                        key={res.source} 
+                      <TabsTrigger
+                        key={res.source}
                         value={res.source}
                         className="relative bg-transparent border-0 font-semibold text-foreground/60 data-[state=active]:text-foreground smooth-transition px-4 py-2 data-[state=active]:shadow-none after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-gradient-to-r after:from-indigo-500 after:to-cyan-500 after:scale-x-0 data-[state=active]:after:scale-x-100 after:transition-transform after:duration-300"
                       >
