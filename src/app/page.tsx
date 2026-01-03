@@ -141,7 +141,7 @@ export default function Home() {
 
         if (contextHtml) {
           const cleanedResponseHtml = contextHtml.replace(/<think>[\s\S]*?<\/think>/g, '');
-          finalQuery = `Query-${query}.Supporting context in html format-${cleanedResponseHtml}.You may need to extract the text from html format before using it for context.In response give the answer of the query. Supporting context is for identifying background of asked question only. It does not contains the answer. Use your knowledge or search to fetch the answer. It is mandatory to generate the response in simple and basic html format which can be rendered easily. `
+          finalQuery = `Query-${query}.\nSupporting context in html format-${cleanedResponseHtml}.You may need to extract the text from html format before using it for context.\nIn response give the answer of the query given. Supporting context is for identifying background of asked query/question like the person, concept, technology ,idea etc in question for the asked query. It does not contains the answer. Use your internal knowledge or live search to fetch the answer for the query. It is mandatory to generate the response in simple and basic html format which can be rendered easily. `
         }
       }
 
