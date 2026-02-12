@@ -1,3 +1,5 @@
+'use client';
+
 import { CopilotChat } from "@copilotkit/react-ui";
 import UserStatus from "@/components/UserStatus";
 import { Sparkles, Send, StopCircle, ThumbsUp, ThumbsDown, Upload, X, Copy } from "lucide-react";
