@@ -1,0 +1,70 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "pwa-node",
+      "request": "launch",
+      "name": "Next.js: Debug Server (npm)",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "console": "integratedTerminal",
+      "autoAttachChildProcesses": true,
+      "sourceMaps": true,
+      "outFiles": [
+        "${workspaceFolder}/.next/**/*.js"
+      ],
+      "serverReadyAction": {
+        "pattern": "Local:\\s+http://localhost:(\\d+)",
+        "uriFormat": "http://localhost:%s",
+        "action": "openExternally"
+      },
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/**",
+        "!**/node_modules/**"
+      ]
+    },
+    {
+      "type": "pwa-node",
+      "request": "launch",
+      "name": "Launch Next.js (Server)",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "node_modules/next/dist/bin/next",
+        "dev"
+      ],
+      "autoAttachChildProcesses": true
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Attach to Next.js (Server)",
+      "port": 9330,
+      "protocol": "inspector",
+      "restart": true,
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    },
+    {
+      "type": "pwa-chrome",
+      "request": "launch",
+      "name": "Debug Frontend in Chrome",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Debug Full Stack",
+      "configurations": [
+        "Attach to Next.js (Server)",
+        "Debug Frontend in Chrome"
+      ]
+    }
+  ]
+}
