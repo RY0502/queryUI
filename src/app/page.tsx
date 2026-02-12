@@ -2,8 +2,10 @@ import { CopilotChat } from "@copilotkit/react-ui";
 import UserStatus from "@/components/UserStatus";
 import { Sparkles, Send, StopCircle, ThumbsUp, ThumbsDown, Upload, X, Copy } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAuthStatus } from "@/hooks/useAuthStatus";
 
 export default function Home() {
+  const { loggedIn, loading, login } = useAuthStatus();
   return (
     <div className="relative flex flex-col min-h-screen overflow-hidden">
       <div className="aurora-bg" />
@@ -59,6 +61,22 @@ export default function Home() {
                   }}
                   imageUploadsEnabled={true}
                 />
+                {!loading && !loggedIn && (
+                  <div className="absolute inset-0 z-20 flex items-center justify-center bg-background/70 backdrop-blur-sm">
+                    <div className="glass rounded-2xl p-6 shadow-lg text-center">
+                      <div className="text-lg font-semibold mb-2">Sign in to continue</div>
+                      <div className="text-sm text-muted-foreground mb-4">
+                        Please sign in before sending a message.
+                      </div>
+                      <button
+                        className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+                        onClick={login}
+                      >
+                        Sign In
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
