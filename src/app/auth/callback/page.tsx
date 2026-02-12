@@ -1,14 +1,15 @@
 'use client';
 
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { getAppwriteAccount } from "@/lib/appwrite";
 import type { Account } from "appwrite";
 
-export default function AuthCallbackPage() {
+export const dynamic = "force-dynamic";
+
+function CallbackContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-
   useEffect(() => {
     const userId = searchParams.get("userId");
     const secret = searchParams.get("secret");
@@ -22,10 +23,23 @@ export default function AuthCallbackPage() {
       router.push("/");
     }
   }, [router, searchParams]);
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <p>Completing authentication…</p>
     </div>
+  );
+}
+
+export default function AuthCallbackPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex flex-col items-center justify-center min-h-screen">
+          <p>Completing authentication…</p>
+        </div>
+      }
+    >
+      <CallbackContent />
+    </Suspense>
   );
 }
